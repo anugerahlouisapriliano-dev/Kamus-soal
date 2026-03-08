@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KamusSoal — Kumpulan Soal SD, SMP, SMA</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#2563eb;--primary-light:#dbeafe;--primary-dark:#1d4ed8;
+  --green:#16a34a;--green-light:#dcfce7;
+  --orange:#ea580c;--orange-light:#ffedd5;
+  --purple:#7c3aed;--purple-light:#ede9fe;
+  --red:#dc2626;--red-light:#fee2e2;
+  --yellow:#ca8a04;--yellow-light:#fef9c3;
+  --text:#111827;--muted:#6b7280;--border:#e5e7eb;
+  --bg:#f9fafb;--surface:#ffffff;
+  --shadow:0 1px 3px rgba(0,0,0,0.1),0 1px 2px rgba(0,0,0,0.06);
+  --shadow-md:0 4px 6px rgba(0,0,0,0.07),0 2px 4px rgba(0,0,0,0.06);
+  --shadow-lg:0 10px 15px rgba(0,0,0,0.1),0 4px 6px rgba(0,0,0,0.05);
+  --radius:12px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
+.hidden{display:none!important;}
+
+/* TOPBAR */
+.topbar{background:white;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;box-shadow:var(--shadow);}
+.topbar-inner{max-width:1100px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);flex-shrink:0;}
+.logo-icon{width:38px;height:38px;background:linear-gradient(135deg,var(--primary),#7c3aed);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;}
+.logo-text{font-family:'Fraunces',serif;font-weight:700;font-size:1.2rem;}
+.logo-text span{color:var(--primary);}
+.topbar-search{flex:1;max-width:480px;position:relative;}
+.search-input{width:100%;padding:10px 16px 10px 42px;border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;outline:none;transition:all 0.2s;background:var(--bg);}
+.search-input:focus{border-color:var(--primary);background:white;box-shadow:0 0 0 3px rgba(37,99,235,0.08);}
+.search-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;}
+.topbar-right{display:flex;gap:10px;align-items:center;}
+.btn-add{padding:9px 18px;background:var(--primary);color:white;border:none;border-radius:9px;font-family:inherit;font-size:0.82rem;font-weight:700;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px;white-space:nowrap;}
+.btn-add:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,0.3);}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 50%,#ecfdf5 100%);border-bottom:1px solid var(--border);padding:48px 24px;}
+.hero-inner{max-width:1100px;margin:0 auto;text-align:center;}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:white;border:1px solid var(--border);border-radius:20px;font-size:0.75rem;font-weight:600;color:var(--primary);margin-bottom:20px;box-shadow:var(--shadow);}
+.hero-title{font-family:'Fraunces',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;line-height:1.15;margin-bottom:14px;color:var(--text);}
+.hero-title span{color:var(--primary);}
+.hero-sub{color:var(--muted);font-size:0.95rem;line-height:1.7;max-width:500px;margin:0 auto 32px;}
+.hero-stats{display:flex;gap:32px;justify-content:center;flex-wrap:wrap;}
+.hs-item{text-align:center;}
+.hs-num{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--primary);line-height:1;}
+.hs-lbl{font-size:0.72rem;color:var(--muted);margin-top:4px;text-transform:uppercase;letter-spacing:0.5px;}
+
+/* FILTERS */
+.filters-bar{background:white;border-bottom:1px solid var(--border);padding:0 24px;position:sticky;top:64px;z-index:99;box-shadow:0 1px 3px rgba(0,0,0,0.05);}
+.filters-inner{max-width:1100px;margin:0 auto;display:flex;gap:8px;align-items:center;padding:12px 0;overflow-x:auto;scrollbar-width:none;}
+.filters-inner::-webkit-scrollbar{display:none;}
+.filter-label{font-size:0.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;margin-right:4px;}
+.chip{padding:6px 14px;border-radius:20px;border:1.5px solid var(--border);background:white;font-family:inherit;font-size:0.78rem;font-weight:600;cursor:pointer;transition:all 0.15s;white-space:nowrap;color:var(--muted);}
+.chip:hover{border-color:var(--primary);color:var(--primary);}
+.chip.active{background:var(--primary);border-color:var(--primary);color:white;}
+.chip.sd.active{background:#16a34a;border-color:#16a34a;}
+.chip.smp.active{background:#2563eb;border-color:#2563eb;}
+.chip.sma.active{background:#7c3aed;border-color:#7c3aed;}
+.filter-divider{width:1px;height:20px;background:var(--border);margin:0 4px;flex-shrink:0;}
+
+/* MAIN */
+.main{max-width:1100px;margin:0 auto;padding:32px 24px;}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.results-count{font-size:0.85rem;color:var(--muted);}
+.results-count strong{color:var(--text);}
+.sort-select{padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-family:inherit;font-size:0.78rem;color:var(--text);background:white;cursor:pointer;outline:none;}
+
+/* SOAL GRID */
+.soal-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px;}
+.soal-card{background:white;border-radius:var(--radius);border:1.5px solid var(--border);padding:20px;transition:all 0.2s;position:relative;overflow:hidden;cursor:pointer;}
+.soal-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.soal-card.sd::before{background:linear-gradient(90deg,var(--green),#4ade80);}
+.soal-card.smp::before{background:linear-gradient(90deg,var(--primary),#60a5fa);}
+.soal-card.sma::before{background:linear-gradient(90deg,var(--purple),#a78bfa);}
+.soal-card:hover{border-color:var(--primary);box-shadow:var(--shadow-lg);transform:translateY(-2px);}
+.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px;}
+.card-badges{display:flex;gap:6px;flex-wrap:wrap;}
+.badge{padding:3px 10px;border-radius:20px;font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;}
+.badge-sd{background:var(--green-light);color:var(--green);}
+.badge-smp{background:var(--primary-light);color:var(--primary);}
+.badge-sma{background:var(--purple-light);color:var(--purple);}
+.badge-mapel{background:#f1f5f9;color:#475569;}
+.badge-easy{background:var(--green-light);color:var(--green);}
+.badge-medium{background:var(--yellow-light);color:var(--yellow);}
+.badge-hard{background:var(--red-light);color:var(--red);}
+.card-menu{position:relative;}
+.card-menu-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:2px 6px;border-radius:6px;transition:background 0.15s;}
+.card-menu-btn:hover{background:var(--bg);}
+.card-dropdown{position:absolute;right:0;top:100%;background:white;border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-lg);min-width:140px;z-index:50;overflow:hidden;}
+.card-dropdown button{width:100%;padding:10px 14px;background:none;border:none;text-align:left;font-family:inherit;font-size:0.82rem;cursor:pointer;color:var(--text);transition:background 0.15s;display:flex;align-items:center;gap:8px;}
+.card-dropdown button:hover{background:var(--bg);}
+.card-dropdown button.danger{color:var(--red);}
+.card-question{font-size:0.88rem;line-height:1.7;color:var(--text);margin-bottom:14px;font-weight:500;}
+.card-options{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.card-option{display:flex;align-items:flex-start;gap:8px;font-size:0.78rem;color:var(--muted);line-height:1.5;}
+.option-letter{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;flex-shrink:0;margin-top:1px;}
+.card-option.correct .option-letter{background:var(--green);border-color:var(--green);color:white;}
+.card-option.correct{color:var(--text);font-weight:600;}
+.card-answer-toggle{display:flex;align-items:center;gap:6px;font-size:0.72rem;color:var(--primary);font-weight:600;cursor:pointer;background:none;border:none;font-family:inherit;padding:0;transition:opacity 0.2s;}
+.card-answer-toggle:hover{opacity:0.7;}
+.card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--border);}
+.card-meta{font-size:0.68rem;color:var(--muted);}
+.card-likes{display:flex;align-items:center;gap:4px;font-size:0.72rem;color:var(--muted);background:none;border:none;cursor:pointer;font-family:inherit;padding:4px 8px;border-radius:6px;transition:all 0.15s;}
+.card-likes:hover{background:var(--red-light);color:var(--red);}
+.card-likes.liked{color:var(--red);}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:80px 24px;}
+.empty-icon{font-size:4rem;margin-bottom:16px;}
+.empty-title{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;margin-bottom:8px;}
+.empty-sub{color:var(--muted);font-size:0.88rem;line-height:1.7;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:200;display:flex;align-items:flex-end;justify-content:center;backdrop-filter:blur(3px);}
+@media(min-width:640px){.modal-overlay{align-items:center;}}
+.modal{background:white;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;border-radius:20px 20px 0 0;padding:28px 24px;animation:slideUp 0.3s ease;}
+@media(min-width:640px){.modal{border-radius:20px;}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;}
+.modal-close{background:var(--bg);border:none;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background 0.15s;}
+.modal-close:hover{background:var(--border);}
+.form-group{margin-bottom:16px;}
+.form-label{display:block;font-size:0.78rem;font-weight:700;color:var(--text);margin-bottom:7px;}
+.form-label span{color:var(--red);}
+.form-input,.form-select,.form-textarea{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:10px;font-family:inherit;font-size:0.88rem;color:var(--text);outline:none;transition:all 0.2s;background:white;}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(37,99,235,0.08);}
+.form-textarea{resize:vertical;min-height:90px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.options-list{display:flex;flex-direction:column;gap:10px;}
+.option-input-wrap{display:flex;align-items:center;gap:10px;}
+.option-letter-label{width:28px;height:28px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:700;flex-shrink:0;color:var(--muted);}
+.option-correct-radio{width:18px;height:18px;accent-color:var(--green);cursor:pointer;flex-shrink:0;}
+.btn-submit{width:100%;padding:13px;background:var(--primary);color:white;border:none;border-radius:10px;font-family:inherit;font-size:0.9rem;font-weight:700;cursor:pointer;transition:all 0.2s;margin-top:8px;}
+.btn-submit:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(37,99,235,0.3);}
+.btn-submit:disabled{opacity:0.6;cursor:not-allowed;transform:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);padding:12px 20px;background:var(--text);color:white;border-radius:10px;font-size:0.85rem;font-weight:600;z-index:300;animation:slideUp 0.3s ease;box-shadow:var(--shadow-lg);white-space:nowrap;}
+.toast.success{background:var(--green);}
+.toast.error{background:var(--red);}
+
+/* DETAIL MODAL */
+.detail-question{font-size:1rem;font-weight:600;line-height:1.8;margin-bottom:20px;padding:16px;background:var(--bg);border-radius:10px;border-left:3px solid var(--primary);}
+.detail-options{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.detail-option{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;border:2px solid var(--border);font-size:0.85rem;line-height:1.6;}
+.detail-option.correct{border-color:var(--green);background:var(--green-light);}
+.detail-option .opt-key{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:800;flex-shrink:0;}
+.detail-option.correct .opt-key{background:var(--green);border-color:var(--green);color:white;}
+.detail-info{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.detail-info-item{padding:10px 14px;background:var(--bg);border-radius:8px;}
+.detail-info-label{font-size:0.65rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--muted);font-weight:700;margin-bottom:4px;}
+.detail-info-value{font-size:0.85rem;font-weight:600;}
+
+/* MOBILE */
+@media(max-width:640px){
+  .topbar-inner{padding:0 16px;height:56px;}
+  .logo-text{font-size:1rem;}
+  .topbar-search{display:none;}
+  .hero{padding:32px 16px;}
+  .hero-stats{gap:20px;}
+  .filters-bar{top:56px;}
+  .main{padding:20px 16px;}
+  .soal-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+  .modal{padding:24px 16px;}
+}
+
+/* LOADING */
+.loading{display:flex;align-items:center;justify-content:center;padding:60px;gap:12px;color:var(--muted);}
+.spinner{width:24px;height:24px;border:3px solid var(--border);border-top-color:var(--primary);border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* FAB mobile search */
+.fab-search{display:none;position:fixed;bottom:80px;right:20px;width:50px;height:50px;background:var(--primary);border-radius:50%;border:none;color:white;font-size:20px;cursor:pointer;box-shadow:0 4px 16px rgba(37,99,235,0.4);z-index:90;align-items:center;justify-content:center;}
+@media(max-width:640px){.fab-search{display:flex;}}
+.mobile-search-bar{display:none;position:fixed;top:56px;left:0;right:0;padding:10px 16px;background:white;border-bottom:1px solid var(--border);z-index:98;box-shadow:var(--shadow-md);}
+.mobile-search-bar.show{display:block;}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="logo" href="#">
+      <div class="logo-icon">📚</div>
+      <div class="logo-text">Kamus<span>Soal</span></div>
+    </a>
+    <div class="topbar-search">
+      <span class="search-icon">🔍</span>
+      <input type="text" class="search-input" id="search-main" placeholder="Cari soal, topik, atau kata kunci..." oninput="doSearch(this.value)">
+    </div>
+    <div class="topbar-right">
+      <button class="btn-add" onclick="openAddModal()">✏️ Tambah Soal</button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE SEARCH BAR -->
+<div class="mobile-search-bar" id="mobile-search-bar">
+  <input type="text" class="search-input" id="search-mobile" placeholder="Cari soal..." oninput="doSearch(this.value)" style="padding-left:16px;">
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📖 Kumpulan Soal Terlengkap</div>
+    <h1 class="hero-title">Bank Soal <span>SD, SMP & SMA</span><br>Gratis & Lengkap</h1>
+    <p class="hero-sub">Temukan ribuan soal latihan dari berbagai mata pelajaran. Bisa dicari, difilter, dan ditambahkan sendiri!</p>
+    <div class="hero-stats">
+      <div class="hs-item"><div class="hs-num" id="stat-total">0</div><div class="hs-lbl">Total Soal</div></div>
+      <div class="hs-item"><div class="hs-num" id="stat-mapel">10</div><div class="hs-lbl">Mata Pelajaran</div></div>
+      <div class="hs-item"><div class="hs-num">3</div><div class="hs-lbl">Jenjang</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FILTERS -->
+<div class="filters-bar">
+  <div class="filters-inner">
+    <span class="filter-label">Jenjang:</span>
+    <button class="chip active" onclick="setFilter('jenjang','all',this)">Semua</button>
+    <button class="chip sd" onclick="setFilter('jenjang','SD',this)">🏫 SD</button>
+    <button class="chip smp" onclick="setFilter('jenjang','SMP',this)">📚 SMP</button>
+    <button class="chip sma" onclick="setFilter('jenjang','SMA',this)">🎓 SMA</button>
+    <div class="filter-divider"></div>
+    <span class="filter-label">Mapel:</span>
+    <button class="chip active" id="chip-mapel-all" onclick="setFilter('mapel','all',this)">Semua</button>
+    <button class="chip" onclick="setFilter('mapel','Matematika',this)">🔢 Matematika</button>
+    <button class="chip" onclick="setFilter('mapel','IPA',this)">🔬 IPA</button>
+    <button class="chip" onclick="setFilter('mapel','IPS',this)">🗺️ IPS</button>
+    <button class="chip" onclick="setFilter('mapel','Bhs. Indonesia',this)">📖 B. Indonesia</button>
+    <button class="chip" onclick="setFilter('mapel','Bhs. Inggris',this)">🌍 B. Inggris</button>
+    <button class="chip" onclick="setFilter('mapel','Fisika',this)">⚡ Fisika</button>
+    <button class="chip" onclick="setFilter('mapel','Kimia',this)">⚗️ Kimia</button>
+    <button class="chip" onclick="setFilter('mapel','Biologi',this)">🧬 Biologi</button>
+    <div class="filter-divider"></div>
+    <span class="filter-label">Level:</span>
+    <button class="chip" onclick="setFilter('level','Mudah',this)">🟢 Mudah</button>
+    <button class="chip" onclick="setFilter('level','Sedang',this)">🟡 Sedang</button>
+    <button class="chip" onclick="setFilter('level','Sulit',this)">🔴 Sulit</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="results-header">
+    <div class="results-count">Menampilkan <strong id="result-count">0</strong> soal</div>
+    <select class="sort-select" onchange="doSort(this.value)">
+      <option value="newest">Terbaru</option>
+      <option value="oldest">Terlama</option>
+      <option value="likes">Paling Disukai</option>
+      <option value="az">A–Z</option>
+    </select>
+  </div>
+  <div id="loading" class="loading"><div class="spinner"></div><span>Memuat soal...</span></div>
+  <div class="soal-grid" id="soal-grid"></div>
+  <div class="empty-state hidden" id="empty-state">
+    <div class="empty-icon">🔍</div>
+    <div class="empty-title">Soal tidak ditemukan</div>
+    <div class="empty-sub">Coba ubah kata kunci atau filter yang kamu gunakan.<br>Atau tambahkan soal baru!</div>
+  </div>
+</div>
+
+<!-- FAB SEARCH MOBILE -->
+<button class="fab-search" onclick="toggleMobileSearch()">🔍</button>
+
+<!-- MODAL TAMBAH SOAL -->
+<div class="modal-overlay hidden" id="modal-add">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-add-title">✏️ Tambah Soal Baru</div>
+      <button class="modal-close" onclick="closeAddModal()">✕</button>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pertanyaan <span>*</span></label>
+      <textarea class="form-textarea" id="f-question" placeholder="Tulis pertanyaan soal di sini..."></textarea>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Jenjang <span>*</span></label>
+        <select class="form-select" id="f-jenjang">
+          <option value="">Pilih jenjang</option>
+          <option value="SD">SD</option>
+          <option value="SMP">SMP</option>
+          <option value="SMA">SMA</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Mata Pelajaran <span>*</span></label>
+        <select class="form-select" id="f-mapel">
+          <option value="">Pilih mapel</option>
+          <option>Matematika</option><option>IPA</option><option>IPS</option>
+          <option>Bhs. Indonesia</option><option>Bhs. Inggris</option>
+          <option>Fisika</option><option>Kimia</option><option>Biologi</option>
+          <option>Ekonomi</option><option>Geografi</option><option>Sejarah</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Tingkat Kesulitan</label>
+        <select class="form-select" id="f-level">
+          <option value="Mudah">🟢 Mudah</option>
+          <option value="Sedang" selected>🟡 Sedang</option>
+          <option value="Sulit">🔴 Sulit</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pembuat</label>
+        <input type="text" class="form-input" id="f-author" placeholder="Nama kamu (opsional)">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pilihan Jawaban <span>*</span> <span style="font-weight:400;color:var(--muted);font-size:0.72rem;">(centang = jawaban benar)</span></label>
+      <div class="options-list">
+        <div class="option-input-wrap"><div class="option-letter-label">A</div><input type="text" class="form-input" id="opt-a" placeholder="Pilihan A"><input type="radio" name="correct" value="0" class="option-correct-radio"></div>
+        <div class="option-input-wrap"><div class="option-letter-label">B</div><input type="text" class="form-input" id="opt-b" placeholder="Pilihan B"><input type="radio" name="correct" value="1" class="option-correct-radio"></div>
+        <div class="option-input-wrap"><div class="option-letter-label">C</div><input type="text" class="form-input" id="opt-c" placeholder="Pilihan C"><input type="radio" name="correct" value="2" class="option-correct-radio"></div>
+        <div class="option-input-wrap"><div class="option-letter-label">D</div><input type="text" class="form-input" id="opt-d" placeholder="Pilihan D"><input type="radio" name="correct" value="3" class="option-correct-radio"></div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Pembahasan <span style="font-weight:400;color:var(--muted);">(opsional)</span></label>
+      <textarea class="form-textarea" id="f-pembahasan" placeholder="Tulis pembahasan/penjelasan jawaban..." style="min-height:70px;"></textarea>
+    </div>
+    <button class="btn-submit" id="btn-submit-soal" onclick="submitSoal()">💾 Simpan Soal</button>
+  </div>
+</div>
+
+<!-- MODAL DETAIL -->
+<div class="modal-overlay hidden" id="modal-detail">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">📋 Detail Soal</div>
+      <button class="modal-close" onclick="closeDetailModal()">✕</button>
+    </div>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<script>
+// ===== STATE =====
+var allSoal = [];
+var filteredSoal = [];
+var filters = { jenjang:'all', mapel:'all', level:'all' };
+var searchQuery = '';
+var sortBy = 'newest';
+var editingId = null;
+var showAnswers = {};
+var likedSoals = JSON.parse(localStorage.getItem('likedSoals')||'[]');
+
+// ===== DEFAULT DATA =====
+var DEFAULT_SOAL = [{"id": "s1", "question": "Hasil dari 125 × 8 adalah ...", "options": ["900", "1000", "1100", "1200"], "correct": 1, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "125 × 8 = 1000", "likes": 24, "timestamp": 1772942706862}, {"id": "s2", "question": "KPK dari 12 dan 18 adalah ...", "options": ["24", "36", "48", "54"], "correct": 1, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "Kelipatan 12: 12,24,36... Kelipatan 18: 18,36... KPK = 36", "likes": 3, "timestamp": 1772939106862}, {"id": "s3", "question": "FPB dari 36 dan 48 adalah ...", "options": ["6", "8", "12", "16"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Faktor 36: 1,2,3,4,6,9,12,18,36. Faktor 48: 1,2,3,4,6,8,12,16,24,48. FPB=12", "likes": 25, "timestamp": 1772935506862}, {"id": "s4", "question": "Volume kubus dengan sisi 7 cm adalah ...", "options": ["49 cm³", "343 cm³", "147 cm³", "294 cm³"], "correct": 1, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "V = s³ = 7³ = 343 cm³", "likes": 18, "timestamp": 1772931906862}, {"id": "s5", "question": "Luas lingkaran dengan jari-jari 14 cm adalah ... (π = 22/7)", "options": ["616 cm²", "308 cm²", "176 cm²", "88 cm²"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "L = π × r² = 22/7 × 14² = 22/7 × 196 = 616 cm²", "likes": 16, "timestamp": 1772928306862}, {"id": "s6", "question": "Pecahan 3/4 jika diubah ke persen menjadi ...", "options": ["65%", "70%", "75%", "80%"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "3/4 × 100% = 75%", "likes": 4, "timestamp": 1772924706862}, {"id": "s7", "question": "Suhu di puncak gunung −5°C, suhu di kaki gunung 20°C. Selisihnya adalah ...", "options": ["15°C", "20°C", "25°C", "30°C"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "20 − (−5) = 20 + 5 = 25°C", "likes": 17, "timestamp": 1772921106862}, {"id": "s8", "question": "2⁵ = ...", "options": ["8", "16", "32", "64"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "2⁵ = 2×2×2×2×2 = 32", "likes": 25, "timestamp": 1772917506862}, {"id": "s9", "question": "Bilangan prima antara 10 dan 20 adalah ...", "options": ["11, 13, 17, 19", "11, 13, 15, 19", "11, 13, 17, 21", "13, 15, 17, 19"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Bilangan prima antara 10-20: 11, 13, 17, 19", "likes": 7, "timestamp": 1772913906862}, {"id": "s10", "question": "Sebuah persegi panjang panjangnya 15 cm dan lebarnya 9 cm. Kelilingnya adalah ...", "options": ["48 cm", "54 cm", "135 cm", "270 cm"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "K = 2 × (p + l) = 2 × (15+9) = 2 × 24 = 48 cm", "likes": 11, "timestamp": 1772910306862}, {"id": "s11", "question": "0,75 + 1,25 = ...", "options": ["1,75", "2,00", "2,25", "2,50"], "correct": 1, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "0,75 + 1,25 = 2,00", "likes": 17, "timestamp": 1772906706862}, {"id": "s12", "question": "Jika harga 1 kg apel Rp12.000, harga 3,5 kg apel adalah ...", "options": ["Rp36.000", "Rp40.000", "Rp42.000", "Rp45.000"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "3,5 × 12.000 = 42.000", "likes": 11, "timestamp": 1772903106862}, {"id": "s13", "question": "Sudut siku-siku besarnya ...", "options": ["45°", "60°", "90°", "180°"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Sudut siku-siku = 90°", "likes": 22, "timestamp": 1772899506862}, {"id": "s14", "question": "Luas segitiga dengan alas 12 cm dan tinggi 8 cm adalah ...", "options": ["48 cm²", "96 cm²", "20 cm²", "40 cm²"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "L = ½ × a × t = ½ × 12 × 8 = 48 cm²", "likes": 6, "timestamp": 1772895906862}, {"id": "s15", "question": "Bentuk sederhana dari 24/36 adalah ...", "options": ["2/3", "3/4", "4/6", "6/9"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "24/36 = 2/3 (dibagi FPB=12)", "likes": 20, "timestamp": 1772892306862}, {"id": "s16", "question": "Rata-rata dari 70, 80, 90, 60 adalah ...", "options": ["70", "75", "80", "85"], "correct": 1, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "(70+80+90+60)/4 = 300/4 = 75", "likes": 6, "timestamp": 1772888706862}, {"id": "s17", "question": "1 jam 45 menit = ... menit", "options": ["95", "100", "105", "115"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "1 jam = 60 menit, 60+45 = 105 menit", "likes": 9, "timestamp": 1772885106862}, {"id": "s18", "question": "Bilangan terbesar di antara 3/4, 2/3, 5/6 adalah ...", "options": ["3/4", "2/3", "5/6", "Sama semua"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "5/6 ≈ 0,833 > 3/4 = 0,75 > 2/3 ≈ 0,667", "likes": 6, "timestamp": 1772881506862}, {"id": "s19", "question": "Volume balok dengan p=10, l=5, t=4 cm adalah ...", "options": ["200 cm³", "180 cm³", "160 cm³", "140 cm³"], "correct": 0, "jenjang": "SD", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "V = p × l × t = 10 × 5 × 4 = 200 cm³", "likes": 10, "timestamp": 1772877906862}, {"id": "s20", "question": "Hasil dari 15% × 400 adalah ...", "options": ["40", "50", "60", "70"], "correct": 2, "jenjang": "SD", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "15/100 × 400 = 60", "likes": 9, "timestamp": 1772874306862}, {"id": "s21", "question": "Proses pembuatan makanan pada tumbuhan dengan bantuan cahaya matahari disebut ...", "options": ["Respirasi", "Fotosintesis", "Transpirasi", "Evaporasi"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Fotosintesis adalah proses pembuatan makanan oleh tumbuhan menggunakan cahaya matahari, air, dan CO₂.", "likes": 20, "timestamp": 1772870706862}, {"id": "s22", "question": "Hewan yang mengalami metamorfosis sempurna adalah ...", "options": ["Belalang", "Kecoak", "Kupu-kupu", "Capung muda"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Metamorfosis sempurna: telur → larva → pupa → imago. Contoh: kupu-kupu, lebah, nyamuk.", "likes": 5, "timestamp": 1772867106862}, {"id": "s23", "question": "Batuan yang terbentuk dari pembekuan magma disebut batuan ...", "options": ["Sedimen", "Metamorf", "Beku", "Kapur"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Batuan beku terbentuk dari pembekuan magma/lava.", "likes": 21, "timestamp": 1772863506862}, {"id": "s24", "question": "Gerhana matahari terjadi ketika ...", "options": ["Bumi berada di antara Matahari dan Bulan", "Bulan berada di antara Matahari dan Bumi", "Matahari berada di antara Bumi dan Bulan", "Bulan dan Bumi sejajar"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Gerhana matahari terjadi ketika Bulan berada di antara Matahari dan Bumi sehingga sinar matahari terhalang.", "likes": 18, "timestamp": 1772859906862}, {"id": "s25", "question": "Benda yang dapat ditarik magnet disebut benda ...", "options": ["Diamagnetik", "Paramagnetik", "Feromagnetik", "Nonmagnetik"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Feromagnetik adalah benda yang dapat ditarik kuat oleh magnet, contoh: besi, baja, nikel.", "likes": 9, "timestamp": 1772856306862}, {"id": "s26", "question": "Perpindahan panas melalui zat tanpa disertai perpindahan zat itu sendiri disebut ...", "options": ["Konveksi", "Radiasi", "Konduksi", "Evaporasi"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Konduksi = perpindahan panas melalui benda tanpa perpindahan zat. Contoh: logam dipanaskan.", "likes": 8, "timestamp": 1772852706862}, {"id": "s27", "question": "Planet yang paling dekat dengan Matahari adalah ...", "options": ["Venus", "Merkurius", "Bumi", "Mars"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Urutan planet dari Matahari: Merkurius, Venus, Bumi, Mars, Jupiter, Saturnus, Uranus, Neptunus.", "likes": 25, "timestamp": 1772849106862}, {"id": "s28", "question": "Alat gerak aktif pada manusia adalah ...", "options": ["Tulang", "Sendi", "Otot", "Ligamen"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Otot adalah alat gerak aktif karena bisa berkontraksi dan berelaksasi secara aktif.", "likes": 16, "timestamp": 1772845506862}, {"id": "s29", "question": "Proses perubahan air menjadi uap air disebut ...", "options": ["Kondensasi", "Presipitasi", "Evaporasi", "Infiltrasi"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Evaporasi = penguapan air menjadi uap air karena panas.", "likes": 18, "timestamp": 1772841906862}, {"id": "s30", "question": "Tumbuhan yang berkembang biak dengan tunas adalah ...", "options": ["Mangga", "Padi", "Pisang", "Jambu"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Pisang berkembang biak dengan tunas anakan.", "likes": 22, "timestamp": 1772838306862}, {"id": "s31", "question": "Bagian telinga yang berfungsi menangkap getaran suara adalah ...", "options": ["Koklea", "Gendang telinga", "Tulang martil", "Saluran eustachius"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Gendang telinga (membran timpani) bergetar saat terkena gelombang suara.", "likes": 24, "timestamp": 1772834706862}, {"id": "s32", "question": "Sumber daya alam yang tidak dapat diperbarui adalah ...", "options": ["Angin", "Air", "Minyak bumi", "Hutan"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Minyak bumi termasuk SDA tidak dapat diperbarui karena pembentukannya membutuhkan jutaan tahun.", "likes": 5, "timestamp": 1772831106862}, {"id": "s33", "question": "Simbiosis di mana kedua organisme saling menguntungkan disebut ...", "options": ["Parasitisme", "Komensalisme", "Mutualisme", "Amensalisme"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Mutualisme = simbiosis saling menguntungkan. Contoh: kupu-kupu dan bunga.", "likes": 15, "timestamp": 1772827506862}, {"id": "s34", "question": "Cahaya matahari masuk ke dalam rumah melalui celah kecil membentuk berkas cahaya karena cahaya merambat ...", "options": ["Melingkar", "Lurus", "Bergelombang", "Memantul"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Cahaya merambat lurus (linier).", "likes": 7, "timestamp": 1772823906862}, {"id": "s35", "question": "Zat yang dapat merubah warna kertas lakmus merah menjadi biru adalah ...", "options": ["Asam", "Basa", "Garam", "Netral"], "correct": 1, "jenjang": "SD", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Basa/alkali mengubah lakmus merah menjadi biru.", "likes": 8, "timestamp": 1772820306862}, {"id": "s36", "question": "Lapisan terluar bumi yang kita pijak disebut ...", "options": ["Mantel", "Inti bumi", "Kerak bumi", "Litosfer"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Kerak bumi adalah lapisan terluar bumi tempat kita berdiri.", "likes": 20, "timestamp": 1772816706862}, {"id": "s37", "question": "Metamorfosis tidak sempurna dilalui oleh ...", "options": ["Kupu-kupu", "Nyamuk", "Lalat", "Belalang"], "correct": 3, "jenjang": "SD", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Belalang mengalami metamorfosis tidak sempurna: telur → nimfa → imago.", "likes": 14, "timestamp": 1772813106862}, {"id": "s38", "question": "Fungsi stomata pada daun adalah ...", "options": ["Menyerap air", "Tempat fotosintesis", "Pertukaran gas", "Menyerap mineral"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Stomata (mulut daun) berfungsi sebagai tempat pertukaran gas CO₂ dan O₂.", "likes": 24, "timestamp": 1772809506862}, {"id": "s39", "question": "Organ yang menghasilkan empedu adalah ...", "options": ["Lambung", "Pankreas", "Hati", "Usus halus"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Hati (liver) menghasilkan empedu yang membantu pencernaan lemak.", "likes": 9, "timestamp": 1772805906862}, {"id": "s40", "question": "Benda yang melayang dalam air memiliki massa jenis ...", "options": ["Lebih besar dari air", "Lebih kecil dari air", "Sama dengan air", "Nol"], "correct": 2, "jenjang": "SD", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Benda melayang jika massa jenisnya sama dengan massa jenis air.", "likes": 5, "timestamp": 1772802306862}, {"id": "s41", "question": "Kalimat yang berisi pendapat atau penilaian seseorang disebut kalimat ...", "options": ["Fakta", "Opini", "Deskripsi", "Narasi"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Opini = kalimat yang berisi pendapat/penilaian seseorang, belum tentu benar.", "likes": 14, "timestamp": 1772798706862}, {"id": "s42", "question": "Pantun yang berisi nasihat disebut pantun ...", "options": ["Muda", "Tua", "Jenaka", "Agama"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Pantun tua berisi nasihat atau petuah dari orang tua.", "likes": 25, "timestamp": 1772795106862}, {"id": "s43", "question": "Majas yang membandingkan dua hal dengan kata 'seperti' atau 'bagaikan' disebut majas ...", "options": ["Metafora", "Personifikasi", "Simile", "Hiperbola"], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Simile = majas perbandingan menggunakan kata penghubung seperti, bagaikan, laksana, bak.", "likes": 19, "timestamp": 1772791506862}, {"id": "s44", "question": "Paragraf yang gagasan utamanya terletak di awal paragraf disebut paragraf ...", "options": ["Induktif", "Deduktif", "Campuran", "Naratif"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Deduktif = gagasan utama di awal paragraf, diikuti kalimat penjelas.", "likes": 22, "timestamp": 1772787906862}, {"id": "s45", "question": "Penulisan judul yang benar adalah ...", "options": ["si kancil dan buaya", "Si Kancil dan Buaya", "Si kancil Dan Buaya", "si Kancil Dan Buaya"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sulit", "author": "Admin", "pembahasan": "Penulisan judul: setiap kata diawali huruf kapital kecuali kata tugas (dan, di, ke, dari).", "likes": 24, "timestamp": 1772784306862}, {"id": "s46", "question": "Antonim dari kata 'rajin' adalah ...", "options": ["Pintar", "Malas", "Bodoh", "Lambat"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Antonim = lawan kata. Antonim 'rajin' adalah 'malas'.", "likes": 24, "timestamp": 1772780706862}, {"id": "s47", "question": "Teks yang bertujuan menggambarkan suatu objek secara detail disebut teks ...", "options": ["Narasi", "Eksposisi", "Deskripsi", "Persuasi"], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Teks deskripsi = teks yang menggambarkan objek secara detail sehingga pembaca seolah melihat langsung.", "likes": 9, "timestamp": 1772777106862}, {"id": "s48", "question": "Sinonim dari kata 'cantik' adalah ...", "options": ["Jelek", "Indah", "Buruk", "Kusam"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Sinonim = persamaan kata. Sinonim 'cantik' adalah 'indah', 'molek', 'elok'.", "likes": 23, "timestamp": 1772773506862}, {"id": "s49", "question": "Kalimat aktif yang benar adalah ...", "options": ["Buku itu dibaca Andi", "Andi membaca buku itu", "Dibacanya buku itu", "Buku itu terbaca Andi"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Kalimat aktif = subjek melakukan pekerjaan. 'Andi membaca buku' → Andi (S) membaca (P) buku (O).", "likes": 10, "timestamp": 1772769906862}, {"id": "s50", "question": "Kata berimbuhan 'me-' yang tepat untuk kata 'sapu' adalah ...", "options": ["Menyapu", "Mensapu", "Menyapukan", "Menyapu-nyapu"], "correct": 0, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sulit", "author": "Admin", "pembahasan": "Kata 'sapu' + me- = menyapu (s luluh menjadi ny).", "likes": 12, "timestamp": 1772766306862}, {"id": "s51", "question": "Bagian pantun yang berisi pesan atau isi pantun disebut ...", "options": ["Sampiran", "Isi", "Bait", "Rima"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Pantun terdiri dari sampiran (baris 1-2) dan isi (baris 3-4).", "likes": 8, "timestamp": 1772762706862}, {"id": "s52", "question": "Penggunaan tanda koma yang benar adalah ...", "options": ["Saya suka makan, minum dan tidur", "Saya suka makan, minum, dan tidur", "Saya, suka makan minum dan tidur", "Saya suka, makan minum dan tidur"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Tanda koma digunakan sebelum 'dan' pada perincian tiga unsur atau lebih.", "likes": 3, "timestamp": 1772759106862}, {"id": "s53", "question": "Kata 'berlari' merupakan kata berawalan ...", "options": ["ber-", "me-", "di-", "ter-"], "correct": 0, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Berlari = ber + lari. Awalan ber- menyatakan melakukan kegiatan.", "likes": 4, "timestamp": 1772755506862}, {"id": "s54", "question": "Teks yang menceritakan rangkaian peristiwa secara berurutan disebut teks ...", "options": ["Deskripsi", "Narasi", "Eksposisi", "Argumentasi"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Teks narasi = menceritakan peristiwa secara kronologis/berurutan.", "likes": 16, "timestamp": 1772751906862}, {"id": "s55", "question": "Ejaan yang tepat untuk nama kota adalah ...", "options": ["jakarta", "JAKARTA", "Jakarta", "jakarta."], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sulit", "author": "Admin", "pembahasan": "Nama kota ditulis dengan huruf kapital di awal: Jakarta.", "likes": 23, "timestamp": 1772748306862}, {"id": "s56", "question": "Kalimat yang mengungkapkan perasaan disebut kalimat ...", "options": ["Berita", "Tanya", "Seru", "Perintah"], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Kalimat seru (eksklamatif) = mengungkapkan perasaan, diakhiri tanda seru (!).", "likes": 5, "timestamp": 1772744706862}, {"id": "s57", "question": "Kata ulang 'sayur-mayur' termasuk kata ulang ...", "options": ["Murni", "Berubah bunyi", "Sebagian", "Berimbuhan"], "correct": 1, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Mudah", "author": "Admin", "pembahasan": "Sayur-mayur = kata ulang berubah bunyi (perubahan huruf awal).", "likes": 22, "timestamp": 1772741106862}, {"id": "s58", "question": "Lafal yang tepat untuk membaca puisi disebut ...", "options": ["Intonasi", "Diksi", "Ekspresi", "Artikulasi"], "correct": 3, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Artikulasi = kejelasan pengucapan huruf/kata saat membaca puisi.", "likes": 12, "timestamp": 1772737506862}, {"id": "s59", "question": "Imbuhan 'ke-an' pada kata 'keindahan' bermakna ...", "options": ["Melakukan", "Menjadi", "Hal atau sifat", "Terlalu"], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sedang", "author": "Admin", "pembahasan": "Ke-an menyatakan hal atau sifat. Keindahan = hal yang indah.", "likes": 23, "timestamp": 1772733906862}, {"id": "s60", "question": "Kalimat 'Tolong tutup pintunya!' adalah kalimat ...", "options": ["Berita", "Tanya", "Perintah", "Seru"], "correct": 2, "jenjang": "SD", "mapel": "Bhs. Indonesia", "level": "Sulit", "author": "Admin", "pembahasan": "Kalimat perintah meminta orang lain melakukan sesuatu.", "likes": 14, "timestamp": 1772730306862}, {"id": "s61", "question": "Jika 3x − 7 = 14, maka x = ...", "options": ["6", "7", "8", "9"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "3x = 21, x = 7", "likes": 21, "timestamp": 1772726706862}, {"id": "s62", "question": "Gradien garis y = 3x − 5 adalah ...", "options": ["−5", "3", "5", "−3"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Gradien = koefisien x = 3", "likes": 5, "timestamp": 1772723106862}, {"id": "s63", "question": "Luas permukaan kubus dengan sisi 6 cm adalah ...", "options": ["36 cm²", "72 cm²", "144 cm²", "216 cm²"], "correct": 2, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Luas = 6 × s² = 6 × 36 = 216 cm². Jawaban: 216", "likes": 17, "timestamp": 1772719506862}, {"id": "s64", "question": "Hasil dari (−3)³ adalah ...", "options": ["9", "−9", "27", "−27"], "correct": 3, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "(−3)³ = (−3)×(−3)×(−3) = −27", "likes": 16, "timestamp": 1772715906862}, {"id": "s65", "question": "Sudut dalam segitiga berjumlah ...", "options": ["90°", "180°", "270°", "360°"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "Jumlah sudut dalam segitiga = 180°", "likes": 15, "timestamp": 1772712306862}, {"id": "s66", "question": "Persamaan garis yang melalui (0,3) dan (2,7) adalah ...", "options": ["y = 2x+3", "y = 3x+2", "y = x+3", "y = 2x−3"], "correct": 0, "jenjang": "SMP", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "m = (7−3)/(2−0) = 2, b = 3, maka y = 2x+3", "likes": 7, "timestamp": 1772708706862}, {"id": "s67", "question": "√144 = ...", "options": ["11", "12", "13", "14"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "√144 = 12 karena 12² = 144", "likes": 25, "timestamp": 1772705106862}, {"id": "s68", "question": "Dua buah bilangan berbanding 3:5. Jika jumlahnya 56, bilangan terbesar adalah ...", "options": ["21", "35", "28", "42"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Bilangan terbesar = 5/(3+5) × 56 = 5/8 × 56 = 35", "likes": 23, "timestamp": 1772701506862}, {"id": "s69", "question": "Nilai x pada pertidaksamaan 2x + 3 > 11 adalah ...", "options": ["x > 3", "x > 4", "x < 4", "x > 7"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "2x > 8, x > 4", "likes": 19, "timestamp": 1772697906862}, {"id": "s70", "question": "Volume tabung dengan r=7 cm dan t=10 cm (π=22/7) adalah ...", "options": ["1540 cm³", "770 cm³", "440 cm³", "220 cm³"], "correct": 0, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "V = π×r²×t = 22/7 × 49 × 10 = 1540 cm³", "likes": 6, "timestamp": 1772694306862}, {"id": "s71", "question": "Sisi miring segitiga siku-siku dengan sisi 6 cm dan 8 cm adalah ...", "options": ["10 cm", "12 cm", "14 cm", "16 cm"], "correct": 0, "jenjang": "SMP", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "Pythagoras: c = √(6²+8²) = √100 = 10 cm", "likes": 19, "timestamp": 1772690706862}, {"id": "s72", "question": "Bilangan 2,5 × 10³ dalam bentuk biasa adalah ...", "options": ["250", "2500", "25000", "0,0025"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "2,5 × 10³ = 2500", "likes": 20, "timestamp": 1772687106862}, {"id": "s73", "question": "Median dari data 3,5,7,9,11 adalah ...", "options": ["5", "7", "9", "11"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Median data ganjil = nilai tengah = 7", "likes": 18, "timestamp": 1772683506862}, {"id": "s74", "question": "Jika p = 3 dan q = −2, nilai p² − q adalah ...", "options": ["7", "11", "13", "5"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "3² − (−2) = 9 + 2 = 11", "likes": 15, "timestamp": 1772679906862}, {"id": "s75", "question": "Luas trapesium dengan sisi sejajar 8 cm, 12 cm dan tinggi 5 cm adalah ...", "options": ["50 cm²", "40 cm²", "100 cm²", "60 cm²"], "correct": 0, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "L = ½ × (a+b) × t = ½ × 20 × 5 = 50 cm²", "likes": 12, "timestamp": 1772676306862}, {"id": "s76", "question": "Jumlah sudut dalam segi enam beraturan adalah ...", "options": ["540°", "630°", "720°", "810°"], "correct": 2, "jenjang": "SMP", "mapel": "Matematika", "level": "Mudah", "author": "Admin", "pembahasan": "(n−2) × 180° = (6−2) × 180° = 720°", "likes": 20, "timestamp": 1772672706862}, {"id": "s77", "question": "Faktorisasi dari x² − 9 adalah ...", "options": ["(x+3)(x−3)", "(x+9)(x−1)", "(x−3)²", "(x+3)²"], "correct": 0, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "x² − 9 = x² − 3² = (x+3)(x−3) (selisih kuadrat)", "likes": 20, "timestamp": 1772669106862}, {"id": "s78", "question": "Modus dari data 2,3,3,4,5,5,5,6 adalah ...", "options": ["3", "4", "5", "6"], "correct": 2, "jenjang": "SMP", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "Modus = nilai yang paling sering muncul = 5 (muncul 3 kali)", "likes": 21, "timestamp": 1772665506862}, {"id": "s79", "question": "Perbandingan skala peta 1:500.000. Jika jarak di peta 3 cm, jarak sebenarnya adalah ...", "options": ["1,5 km", "15 km", "150 km", "1500 km"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "3 × 500.000 = 1.500.000 cm = 15 km", "likes": 13, "timestamp": 1772661906862}, {"id": "s80", "question": "Himpunan A = {1,2,3,4} dan B = {3,4,5,6}. A ∩ B = ...", "options": ["{1,2}", "{3,4}", "{5,6}", "{1,2,5,6}"], "correct": 1, "jenjang": "SMP", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "Irisan = elemen yang ada di kedua himpunan = {3,4}", "likes": 17, "timestamp": 1772658306862}, {"id": "s81", "question": "Sel tumbuhan berbeda dengan sel hewan karena sel tumbuhan memiliki ...", "options": ["Mitokondria", "Ribosom", "Dinding sel", "Membran sel"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Sel tumbuhan memiliki dinding sel, vakuola besar, dan kloroplas yang tidak dimiliki sel hewan.", "likes": 25, "timestamp": 1772654706862}, {"id": "s82", "question": "Hukum I Newton menyatakan bahwa benda akan tetap diam atau bergerak lurus jika ...", "options": ["Ada gaya yang bekerja", "Resultan gaya = 0", "Ada percepatan", "Gaya lebih besar dari massa"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Hukum I Newton (inersia): benda akan tetap dalam keadaannya jika resultan gaya = 0.", "likes": 15, "timestamp": 1772651106862}, {"id": "s83", "question": "Proses pencernaan makanan secara kimiawi terjadi di ...", "options": ["Mulut dan usus besar", "Lambung dan usus halus", "Mulut dan lambung", "Kerongkongan dan usus"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Pencernaan kimiawi terjadi di mulut (enzim amilase) dan lambung (asam HCl, pepsin).", "likes": 25, "timestamp": 1772647506862}, {"id": "s84", "question": "Magnet yang terbuat dari besi lunak disebut magnet ...", "options": ["Permanen", "Sementara", "Alami", "Buatan"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Besi lunak mudah kehilangan sifat magnet → magnet sementara. Baja → magnet permanen.", "likes": 21, "timestamp": 1772643906862}, {"id": "s85", "question": "Gelombang yang merambat tidak memerlukan medium disebut gelombang ...", "options": ["Mekanik", "Transversal", "Longitudinal", "Elektromagnetik"], "correct": 3, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Gelombang elektromagnetik (cahaya, radio, X-ray) merambat tanpa medium.", "likes": 19, "timestamp": 1772640306862}, {"id": "s86", "question": "Unsur dengan nomor atom 6 adalah ...", "options": ["Nitrogen", "Karbon", "Oksigen", "Helium"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Nomor atom = jumlah proton. Karbon (C) memiliki nomor atom 6.", "likes": 22, "timestamp": 1772636706862}, {"id": "s87", "question": "Proses respirasi aerob menghasilkan ...", "options": ["O₂ dan H₂O", "CO₂ dan H₂O", "O₂ dan CO₂", "N₂ dan H₂O"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Respirasi aerob: C₆H₁₂O₆ + O₂ → CO₂ + H₂O + energi", "likes": 5, "timestamp": 1772633106862}, {"id": "s88", "question": "Tekanan yang diberikan pada zat cair akan diteruskan ke segala arah sama besar. Ini adalah Hukum ...", "options": ["Newton", "Pascal", "Archimedes", "Boyle"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Hukum Pascal: tekanan pada zat cair diteruskan ke segala arah sama besar.", "likes": 13, "timestamp": 1772629506862}, {"id": "s89", "question": "Jenis tulang yang membentuk tulang pipa adalah ...", "options": ["Tulang spons dan tulang keras", "Tulang kompak dan tulang spons", "Tulang rawan dan tulang keras", "Tulang kompak saja"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Tulang pipa terdiri dari tulang kompak (luar) dan tulang spons (dalam).", "likes": 16, "timestamp": 1772625906862}, {"id": "s90", "question": "Perubahan wujud dari gas menjadi cair disebut ...", "options": ["Menguap", "Membeku", "Mengembun", "Menyublim"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Mengembun (kondensasi) = perubahan gas → cair. Contoh: embun di pagi hari.", "likes": 23, "timestamp": 1772622306862}, {"id": "s91", "question": "Fotosintesis menghasilkan ...", "options": ["CO₂ dan air", "O₂ dan glukosa", "H₂O dan energi", "N₂ dan glukosa"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Fotosintesis: CO₂ + H₂O + cahaya → O₂ + C₆H₁₂O₆ (glukosa)", "likes": 17, "timestamp": 1772618706862}, {"id": "s92", "question": "Bunyi tidak dapat merambat melalui ...", "options": ["Air", "Besi", "Udara", "Ruang hampa"], "correct": 3, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Bunyi merambat melalui medium (padat, cair, gas). Tidak bisa merambat di ruang hampa.", "likes": 6, "timestamp": 1772615106862}, {"id": "s93", "question": "Indikator asam basa yang paling umum digunakan di laboratorium adalah ...", "options": ["Fenolftalein", "Metil merah", "Lakmus", "Bromtimol biru"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Kertas lakmus adalah indikator asam-basa yang paling umum: merah=asam, biru=basa.", "likes": 9, "timestamp": 1772611506862}, {"id": "s94", "question": "Gaya Archimedes besarnya sama dengan ...", "options": ["Massa benda", "Berat benda", "Berat zat cair yang dipindahkan", "Volume benda"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Hukum Archimedes: FA = berat zat cair yang dipindahkan.", "likes": 25, "timestamp": 1772607906862}, {"id": "s95", "question": "Sistem peredaran darah manusia yang membawa darah dari jantung ke seluruh tubuh disebut ...", "options": ["Peredaran darah kecil", "Peredaran darah besar", "Peredaran darah pulmonal", "Peredaran darah limfa"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Peredaran darah besar: jantung → seluruh tubuh → jantung. Peredaran kecil: jantung → paru-paru → jantung.", "likes": 20, "timestamp": 1772604306862}, {"id": "s96", "question": "Reaksi kimia yang membutuhkan panas disebut reaksi ...", "options": ["Eksoterm", "Endoterm", "Netral", "Spontan"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Mudah", "author": "Admin", "pembahasan": "Endoterm = reaksi yang menyerap panas dari lingkungan. Eksoterm = melepas panas.", "likes": 14, "timestamp": 1772600706862}, {"id": "s97", "question": "Satu getaran penuh per detik disebut ...", "options": ["Amplitudo", "Frekuensi", "Periode", "Panjang gelombang"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Frekuensi = jumlah getaran per detik, satuan Hertz (Hz).", "likes": 23, "timestamp": 1772597106862}, {"id": "s98", "question": "Organ yang menghasilkan insulin adalah ...", "options": ["Hati", "Lambung", "Pankreas", "Ginjal"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sedang", "author": "Admin", "pembahasan": "Insulin diproduksi oleh sel beta di pankreas untuk mengatur kadar gula darah.", "likes": 23, "timestamp": 1772593506862}, {"id": "s99", "question": "Senyawa yang terbentuk dari atom H dan O adalah ...", "options": ["H₂SO₄", "NaOH", "H₂O", "HCl"], "correct": 2, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "H₂O (air) terbentuk dari 2 atom hidrogen dan 1 atom oksigen.", "likes": 23, "timestamp": 1772589906862}, {"id": "s100", "question": "Kecepatan cahaya di ruang hampa adalah ...", "options": ["3 × 10⁶ m/s", "3 × 10⁸ m/s", "3 × 10¹⁰ m/s", "3 × 10⁴ m/s"], "correct": 1, "jenjang": "SMP", "mapel": "IPA", "level": "Sulit", "author": "Admin", "pembahasan": "Kecepatan cahaya = 3 × 10⁸ m/s (300 juta meter per detik).", "likes": 16, "timestamp": 1772586306862}, {"id": "s101", "question": "Proklamasi Kemerdekaan Indonesia dibacakan oleh ...", "options": ["Soekarno saja", "Hatta saja", "Soekarno dan Hatta", "Syahrir dan Soekarno"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Mudah", "author": "Admin", "pembahasan": "Proklamasi dibacakan oleh Soekarno didampingi Moh. Hatta pada 17 Agustus 1945.", "likes": 6, "timestamp": 1772582706862}, {"id": "s102", "question": "Bentuk permukaan bumi yang luas dan datar atau bergelombang dengan ketinggian di bawah 200 m disebut ...", "options": ["Pegunungan", "Dataran tinggi", "Dataran rendah", "Lembah"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Dataran rendah = permukaan bumi yang relatif datar dengan ketinggian 0-200 m di atas permukaan laut.", "likes": 14, "timestamp": 1772579106862}, {"id": "s103", "question": "Badan Penyelidik Usaha-Usaha Persiapan Kemerdekaan Indonesia (BPUPKI) dibentuk pada ...", "options": ["1 Maret 1945", "1 April 1945", "1 Juni 1945", "17 Agustus 1945"], "correct": 0, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "BPUPKI dibentuk Jepang pada 1 Maret 1945 untuk mempersiapkan kemerdekaan Indonesia.", "likes": 22, "timestamp": 1772575506862}, {"id": "s104", "question": "Interaksi sosial yang bersifat negatif (mengarah perpecahan) disebut ...", "options": ["Asosiatif", "Disosiatif", "Akomodasi", "Akulturasi"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Disosiatif = interaksi yang mengarah pada perpecahan: persaingan, konflik, kontravensi.", "likes": 20, "timestamp": 1772571906862}, {"id": "s105", "question": "Kegiatan ekonomi yang menghasilkan barang dan jasa disebut kegiatan ...", "options": ["Konsumsi", "Distribusi", "Produksi", "Investasi"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Produksi = kegiatan menghasilkan/menambah nilai guna barang dan jasa.", "likes": 21, "timestamp": 1772568306862}, {"id": "s106", "question": "Letak Indonesia yang berada di antara dua samudra memberikan keuntungan sebagai ...", "options": ["Negara kepulauan", "Jalur perdagangan internasional", "Negara agraris", "Pusat teknologi"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Mudah", "author": "Admin", "pembahasan": "Posisi Indonesia di antara Samudra Hindia dan Pasifik menjadikannya jalur perdagangan internasional.", "likes": 21, "timestamp": 1772564706862}, {"id": "s107", "question": "Sistem ekonomi di mana pemerintah mengatur seluruh kegiatan ekonomi disebut ...", "options": ["Liberal", "Campuran", "Komando/terpusat", "Pasar bebas"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Ekonomi komando/terpusat: pemerintah mengatur semua kegiatan ekonomi. Contoh: Korea Utara.", "likes": 15, "timestamp": 1772561106862}, {"id": "s108", "question": "Batas wilayah Indonesia di sebelah utara adalah ...", "options": ["Samudra Hindia", "Samudra Pasifik", "Malaysia dan Filipina", "Australia"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Batas utara Indonesia: Malaysia, Singapura, Filipina, Laut Cina Selatan, Samudra Pasifik.", "likes": 6, "timestamp": 1772557506862}, {"id": "s109", "question": "Pengaruh letak astronomis Indonesia menyebabkan Indonesia beriklim ...", "options": ["Subtropis", "Tropis", "Kutub", "Sedang"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Indonesia berada di garis khatulistiwa (0°), sehingga beriklim tropis dengan suhu panas sepanjang tahun.", "likes": 8, "timestamp": 1772553906862}, {"id": "s110", "question": "Masa berburu dan meramu (food gathering) pada zaman prasejarah ditandai dengan ...", "options": ["Manusia sudah bercocok tanam", "Manusia hidup berpindah-pindah", "Manusia membuat candi", "Manusia sudah mengenal tulisan"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Food gathering: manusia hidup nomaden (berpindah) mengikuti sumber makanan.", "likes": 10, "timestamp": 1772550306862}, {"id": "s111", "question": "Kerja sama antarnegara dalam bidang ekonomi, politik, dan sosial budaya disebut ...", "options": ["Globalisasi", "Integrasi", "Diplomasi", "Kerjasama internasional"], "correct": 3, "jenjang": "SMP", "mapel": "IPS", "level": "Mudah", "author": "Admin", "pembahasan": "Kerjasama internasional = hubungan antara dua atau lebih negara dalam berbagai bidang.", "likes": 19, "timestamp": 1772546706862}, {"id": "s112", "question": "Penyebab utama terjadinya kemiskinan di Indonesia adalah ...", "options": ["Terlalu banyak SDA", "Rendahnya kualitas SDM dan pendidikan", "Terlalu banyak penduduk", "Letak geografis"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Kemiskinan umumnya disebabkan rendahnya kualitas SDM, pendidikan, dan kurangnya lapangan kerja.", "likes": 8, "timestamp": 1772543106862}, {"id": "s113", "question": "Organisasi perdagangan bebas dunia disebut ...", "options": ["ASEAN", "APEC", "WTO", "IMF"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "WTO (World Trade Organization) = organisasi internasional yang mengatur perdagangan bebas dunia.", "likes": 5, "timestamp": 1772539506862}, {"id": "s114", "question": "Proses berpindahnya penduduk dari desa ke kota disebut ...", "options": ["Emigrasi", "Imigrasi", "Urbanisasi", "Transmigrasi"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Urbanisasi = perpindahan penduduk dari desa ke kota untuk mencari pekerjaan/kehidupan lebih baik.", "likes": 11, "timestamp": 1772535906862}, {"id": "s115", "question": "Sumber daya alam hayati yang bisa diperbarui adalah ...", "options": ["Batu bara", "Minyak bumi", "Gas alam", "Hutan"], "correct": 3, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Hutan termasuk SDA hayati yang dapat diperbarui jika dikelola dengan baik.", "likes": 22, "timestamp": 1772532306862}, {"id": "s116", "question": "Kerajaan Hindu pertama di Indonesia adalah ...", "options": ["Sriwijaya", "Majapahit", "Kutai", "Tarumanegara"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Mudah", "author": "Admin", "pembahasan": "Kutai (Kalimantan Timur) adalah kerajaan Hindu tertua di Indonesia (abad ke-4 M).", "likes": 11, "timestamp": 1772528706862}, {"id": "s117", "question": "Pembangunan berkelanjutan artinya pembangunan yang ...", "options": ["Hanya untuk generasi sekarang", "Memperhatikan kebutuhan generasi mendatang", "Fokus pada ekonomi saja", "Mengeksploitasi SDA sepenuhnya"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Pembangunan berkelanjutan = pembangunan yang memenuhi kebutuhan sekarang tanpa mengorbankan kemampuan generasi mendatang.", "likes": 12, "timestamp": 1772525106862}, {"id": "s118", "question": "Dampak positif globalisasi di bidang ekonomi adalah ...", "options": ["Budaya lokal tergeser", "Masuknya produk asing", "Kemudahan akses pasar internasional", "Meningkatnya pengangguran"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sedang", "author": "Admin", "pembahasan": "Globalisasi membuka akses ke pasar internasional sehingga produk lokal bisa diekspor lebih mudah.", "likes": 6, "timestamp": 1772521506862}, {"id": "s119", "question": "Mata uang resmi yang digunakan dalam transaksi ASEAN adalah ...", "options": ["Dollar AS", "Euro", "Mata uang masing-masing negara", "Yen Jepang"], "correct": 2, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "ASEAN tidak memiliki mata uang bersama; setiap negara menggunakan mata uang nasionalnya.", "likes": 4, "timestamp": 1772517906862}, {"id": "s120", "question": "Faktor yang mendorong terjadinya perdagangan internasional adalah ...", "options": ["Negara bisa memenuhi semua kebutuhannya sendiri", "Perbedaan sumber daya dan kemampuan produksi", "Tidak adanya hubungan antarnegara", "Kesamaan budaya"], "correct": 1, "jenjang": "SMP", "mapel": "IPS", "level": "Sulit", "author": "Admin", "pembahasan": "Perdagangan internasional terjadi karena perbedaan SDA, teknologi, dan kemampuan produksi antarnegara.", "likes": 9, "timestamp": 1772514306862}, {"id": "s121", "question": "Turunan dari f(x) = 5x⁴ − 3x² + 2x adalah ...", "options": ["20x³ − 6x + 2", "20x³ − 3x + 2", "15x³ − 6x + 2", "20x⁴ − 6x + 2"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "f'(x) = 4·5x³ − 2·3x + 2 = 20x³ − 6x + 2", "likes": 21, "timestamp": 1772510706862}, {"id": "s122", "question": "Nilai dari sin 30° + cos 60° adalah ...", "options": ["1", "1/2", "3/2", "√2/2"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "sin30° = 1/2, cos60° = 1/2, jadi 1/2 + 1/2 = 1", "likes": 5, "timestamp": 1772507106862}, {"id": "s123", "question": "Limit dari (x²−4)/(x−2) saat x→2 adalah ...", "options": ["0", "2", "4", "Tidak ada"], "correct": 2, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "Faktorkan: (x+2)(x−2)/(x−2) = x+2 → saat x=2: 2+2=4", "likes": 24, "timestamp": 1772503506862}, {"id": "s124", "question": "Determinan matriks [[3,1],[2,4]] adalah ...", "options": ["10", "12", "14", "16"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "det = (3×4) − (1×2) = 12 − 2 = 10", "likes": 11, "timestamp": 1772499906862}, {"id": "s125", "question": "Integral dari ∫3x² dx adalah ...", "options": ["x³+C", "3x³+C", "x³/3+C", "6x+C"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "∫3x² dx = 3·x³/3 + C = x³ + C", "likes": 13, "timestamp": 1772496306862}, {"id": "s126", "question": "Persamaan lingkaran berpusat di (2,−3) dengan jari-jari 5 adalah ...", "options": ["(x−2)²+(y+3)²=25", "(x+2)²+(y−3)²=25", "(x−2)²+(y−3)²=25", "(x+2)²+(y+3)²=25"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "(x−a)²+(y−b)²=r², pusat (2,−3): (x−2)²+(y+3)²=25", "likes": 5, "timestamp": 1772492706862}, {"id": "s127", "question": "Suku ke-10 barisan aritmetika 3, 7, 11, ... adalah ...", "options": ["39", "41", "43", "45"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "a=3, b=4, U₁₀ = 3+(10−1)×4 = 3+36 = 39", "likes": 4, "timestamp": 1772489106862}, {"id": "s128", "question": "Jumlah deret geometri tak hingga 1 + 1/2 + 1/4 + ... adalah ...", "options": ["1", "2", "3", "4"], "correct": 1, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "S∞ = a/(1−r) = 1/(1−1/2) = 1/(1/2) = 2", "likes": 4, "timestamp": 1772485506862}, {"id": "s129", "question": "Nilai dari ⁵log 125 adalah ...", "options": ["3", "4", "5", "25"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "⁵log 125 = ⁵log 5³ = 3", "likes": 12, "timestamp": 1772481906862}, {"id": "s130", "question": "Jika cos α = 4/5, maka sin α = ...", "options": ["3/5", "4/5", "5/3", "5/4"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "sin²+cos²=1, sin²=1−16/25=9/25, sin α=3/5", "likes": 22, "timestamp": 1772478306862}, {"id": "s131", "question": "Himpunan penyelesaian dari |2x−3| = 7 adalah ...", "options": ["{−2, 5}", "{2, −5}", "{5, −2}", "{3, −7}"], "correct": 2, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "|2x−3|=7: 2x−3=7→x=5 atau 2x−3=−7→x=−2. Jawaban: {5,−2}", "likes": 8, "timestamp": 1772474706862}, {"id": "s132", "question": "Titik potong garis y=2x+1 dengan y=−x+7 adalah ...", "options": ["(2,5)", "(3,4)", "(1,3)", "(4,3)"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "2x+1=−x+7 → 3x=6 → x=2, y=5. Titik: (2,5)", "likes": 8, "timestamp": 1772471106862}, {"id": "s133", "question": "Nilai diskriminan dari 2x²−5x+3=0 adalah ...", "options": ["1", "2", "4", "−1"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "D = b²−4ac = 25−24 = 1", "likes": 25, "timestamp": 1772467506862}, {"id": "s134", "question": "cos(90°−α) = ...", "options": ["cos α", "−cos α", "sin α", "−sin α"], "correct": 2, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "cos(90°−α) = sin α (identitas sudut komplementer)", "likes": 3, "timestamp": 1772463906862}, {"id": "s135", "question": "Banyak cara menyusun 3 buku dari 5 buku berbeda adalah ...", "options": ["10", "20", "60", "120"], "correct": 2, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "P(5,3) = 5!/(5−3)! = 5×4×3 = 60", "likes": 6, "timestamp": 1772460306862}, {"id": "s136", "question": "Turunan f(x) = sin(3x) adalah ...", "options": ["cos(3x)", "3cos(3x)", "−cos(3x)", "−3cos(3x)"], "correct": 1, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "f'(x) = 3·cos(3x) (aturan rantai)", "likes": 16, "timestamp": 1772456706862}, {"id": "s137", "question": "Jika f(x)=2x+1 dan g(x)=x², maka (f∘g)(x) = ...", "options": ["2x²+1", "(2x+1)²", "4x²+1", "2x+1"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sedang", "author": "Admin", "pembahasan": "(f∘g)(x) = f(g(x)) = f(x²) = 2x²+1", "likes": 14, "timestamp": 1772453106862}, {"id": "s138", "question": "Nilai dari ∫₀² x² dx adalah ...", "options": ["4/3", "8/3", "4", "8"], "correct": 1, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "[x³/3]₀² = 8/3 − 0 = 8/3", "likes": 20, "timestamp": 1772449506862}, {"id": "s139", "question": "Persamaan sumbu simetri dari y = x² − 6x + 5 adalah ...", "options": ["x = 2", "x = 3", "x = −3", "x = 6"], "correct": 1, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "x = −b/2a = 6/2 = 3", "likes": 24, "timestamp": 1772445906862}, {"id": "s140", "question": "Jika matriks A = [[2,3],[1,4]], invers A adalah ...", "options": ["[[4,−3],[−1,2]]/5", "[[4,−3],[−1,2]]", "[[2,−3],[−1,4]]", "[[4,3],[1,2]]/5"], "correct": 0, "jenjang": "SMA", "mapel": "Matematika", "level": "Sulit", "author": "Admin", "pembahasan": "det(A)=8−3=5, A⁻¹=1/5×[[4,−3],[−1,2]]", "likes": 8, "timestamp": 1772442306862}, {"id": "s141", "question": "Benda jatuh bebas dari ketinggian 80 m. Waktu yang dibutuhkan (g=10 m/s²) adalah ...", "options": ["2 s", "4 s", "8 s", "10 s"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "h = ½gt² → 80 = ½×10×t² → t² = 16 → t = 4 s", "likes": 15, "timestamp": 1772438706862}, {"id": "s142", "question": "Dua muatan +3C dan +4C berjarak 3 m. Gaya Coulomb (k=9×10⁹) = ...", "options": ["12×10⁹ N", "4×10⁹ N", "9×10⁹ N", "3×10⁹ N"], "correct": 0, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "F = kq₁q₂/r² = 9×10⁹×3×4/9 = 12×10⁹ N", "likes": 7, "timestamp": 1772435106862}, {"id": "s143", "question": "Efek Doppler terjadi pada perubahan ...", "options": ["Amplitudo gelombang", "Frekuensi gelombang", "Panjang gelombang", "Kecepatan rambat"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Efek Doppler: perubahan frekuensi gelombang yang diterima akibat gerak sumber atau pengamat.", "likes": 15, "timestamp": 1772431506862}, {"id": "s144", "question": "Energi kinetik benda bermassa 2 kg berkecepatan 10 m/s adalah ...", "options": ["20 J", "100 J", "200 J", "10 J"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Ek = ½mv² = ½×2×100 = 100 J", "likes": 11, "timestamp": 1772427906862}, {"id": "s145", "question": "Hambatan pengganti untuk dua hambatan 6Ω dan 3Ω yang dirangkai paralel adalah ...", "options": ["9Ω", "2Ω", "18Ω", "1Ω"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "1/R = 1/6 + 1/3 = 1/6 + 2/6 = 3/6 = 1/2, R = 2Ω", "likes": 18, "timestamp": 1772424306862}, {"id": "s146", "question": "Hukum kekekalan energi mekanik berlaku jika ...", "options": ["Ada gaya gesek", "Ada gaya luar", "Tidak ada gaya non-konservatif", "Ada percepatan"], "correct": 2, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "Energi mekanik kekal jika tidak ada gaya non-konservatif (seperti gesek, hambatan udara).", "likes": 23, "timestamp": 1772420706862}, {"id": "s147", "question": "Transformator step-up berfungsi untuk ...", "options": ["Menurunkan tegangan", "Menaikkan tegangan", "Mengubah arus DC ke AC", "Menyimpan energi"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "Trafo step-up: menaikkan tegangan listrik (N primer < N sekunder).", "likes": 12, "timestamp": 1772417106862}, {"id": "s148", "question": "Frekuensi gelombang 10 Hz dengan panjang gelombang 0,5 m, cepat rambatnya adalah ...", "options": ["5 m/s", "0,5 m/s", "20 m/s", "50 m/s"], "correct": 0, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "v = f × λ = 10 × 0,5 = 5 m/s", "likes": 11, "timestamp": 1772413506862}, {"id": "s149", "question": "Impuls gaya F yang bekerja selama waktu t adalah ...", "options": ["F+t", "F×t", "F/t", "F²×t"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Impuls = F × t (Newton × sekon = kg⋅m/s)", "likes": 6, "timestamp": 1772409906862}, {"id": "s150", "question": "Pada pemuaian panjang, faktor yang mempengaruhi adalah ...", "options": ["Panjang awal, suhu, koefisien muai panjang", "Massa, suhu, koefisien muai", "Luas, suhu, koefisien muai", "Volume, suhu, koefisien muai"], "correct": 0, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "ΔL = L₀ × α × ΔT (panjang awal, koefisien muai panjang α, perubahan suhu ΔT)", "likes": 3, "timestamp": 1772406306862}, {"id": "s151", "question": "Fotolistrik terjadi ketika cahaya mengenai permukaan logam dan ...", "options": ["Memanaskan logam", "Melepaskan elektron", "Memperkuat logam", "Mengubah warna logam"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "Efek fotolistrik: elektron terlepas dari permukaan logam ketika disinari cahaya berenergi cukup.", "likes": 8, "timestamp": 1772402706862}, {"id": "s152", "question": "Tekanan hidrostatis di kedalaman h, dengan massa jenis ρ dan gravitasi g adalah ...", "options": ["ρgh", "ρg/h", "ρ/gh", "gh/ρ"], "correct": 0, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "P = ρgh (massa jenis × gravitasi × kedalaman)", "likes": 6, "timestamp": 1772399106862}, {"id": "s153", "question": "Gelombang transversal merambat jika arah getarannya ...", "options": ["Sejajar arah rambat", "Tegak lurus arah rambat", "Melingkar", "Berlawanan arah rambat"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Transversal: getaran tegak lurus arah rambat. Longitudinal: getaran sejajar arah rambat.", "likes": 8, "timestamp": 1772395506862}, {"id": "s154", "question": "Sumber bunyi bergerak mendekati pengamat, frekuensi yang didengar ...", "options": ["Lebih rendah", "Sama", "Lebih tinggi", "Tergantung cuaca"], "correct": 2, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Efek Doppler: sumber mendekati pengamat → frekuensi terdengar lebih tinggi.", "likes": 22, "timestamp": 1772391906862}, {"id": "s155", "question": "Energi yang tersimpan dalam kapasitor dengan kapasitansi C dan tegangan V adalah ...", "options": ["CV", "½CV", "½CV²", "CV²"], "correct": 2, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "E = ½CV²", "likes": 8, "timestamp": 1772388306862}, {"id": "s156", "question": "Gerak harmonik sederhana (GHS) adalah gerak yang ...", "options": ["Bergerak lurus beraturan", "Bergerak melingkar", "Bolak-balik melewati titik keseimbangan", "Bergerak dengan percepatan tetap"], "correct": 2, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "GHS: gerak bolak-balik melalui titik keseimbangan dengan frekuensi dan amplitudo tetap.", "likes": 10, "timestamp": 1772384706862}, {"id": "s157", "question": "Pada reaksi fisi nuklir, inti berat dipecah menjadi ...", "options": ["Inti yang lebih berat", "Dua inti yang lebih ringan", "Proton saja", "Neutron saja"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sedang", "author": "Admin", "pembahasan": "Fisi nuklir: pembelahan inti berat menjadi dua inti lebih ringan disertai pelepasan energi besar.", "likes": 16, "timestamp": 1772381106862}, {"id": "s158", "question": "Nilai tegangan listrik PLN di Indonesia adalah ...", "options": ["110 V / 50 Hz", "220 V / 50 Hz", "220 V / 60 Hz", "110 V / 60 Hz"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Standar PLN Indonesia: 220 Volt, 50 Hz.", "likes": 22, "timestamp": 1772377506862}, {"id": "s159", "question": "Hukum Ohm menyatakan bahwa arus listrik berbanding lurus dengan ...", "options": ["Hambatan", "Tegangan", "Daya", "Energi"], "correct": 1, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "I = V/R → arus (I) berbanding lurus dengan tegangan (V), berbanding terbalik dengan hambatan (R).", "likes": 10, "timestamp": 1772373906862}, {"id": "s160", "question": "Kecepatan peluru yang ditembakkan secara mendatar dari ketinggian dan mengenai tanah tidak dipengaruhi oleh ...", "options": ["Ketinggian", "Gravitasi", "Kecepatan awal mendatar", "Massa peluru"], "correct": 3, "jenjang": "SMA", "mapel": "Fisika", "level": "Sulit", "author": "Admin", "pembahasan": "Gerak horizontal dan vertikal pada gerak parabola independen. Massa tidak mempengaruhi waktu jatuh (prinsip Galileo).", "likes": 9, "timestamp": 1772370306862}, {"id": "s161", "question": "Tabel periodik modern disusun berdasarkan ...", "options": ["Massa atom", "Nomor atom", "Sifat kimia", "Wujud zat"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Tabel periodik modern (Moseley) disusun berdasarkan kenaikan nomor atom.", "likes": 12, "timestamp": 1772366706862}, {"id": "s162", "question": "Ikatan yang terbentuk antara atom Na dan Cl adalah ikatan ...", "options": ["Kovalen", "Ion", "Logam", "Hidrogen"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "NaCl terbentuk dari transfer elektron Na→Cl, membentuk ikatan ion.", "likes": 5, "timestamp": 1772363106862}, {"id": "s163", "question": "pH larutan dengan [H⁺] = 10⁻³ adalah ...", "options": ["3", "7", "11", "−3"], "correct": 0, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "pH = −log[H⁺] = −log10⁻³ = 3", "likes": 5, "timestamp": 1772359506862}, {"id": "s164", "question": "Reaksi yang melepaskan panas ke lingkungan disebut reaksi ...", "options": ["Endoterm", "Eksoterm", "Redoks", "Netralisasi"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Eksoterm: reaksi melepas panas, ΔH < 0.", "likes": 7, "timestamp": 1772355906862}, {"id": "s165", "question": "Rumus molekul glukosa adalah ...", "options": ["C₁₂H₂₂O₁₁", "C₆H₁₂O₆", "C₂H₅OH", "CH₃COOH"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Glukosa = C₆H₁₂O₆ (gula sederhana monosakarida).", "likes": 3, "timestamp": 1772352306863}, {"id": "s166", "question": "Bilangan oksidasi O dalam H₂O adalah ...", "options": ["0", "+2", "−2", "+1"], "correct": 2, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Dalam senyawa, O biasanya memiliki biloks −2. Pengecualian: peroksida (−1) dan OF₂ (+2).", "likes": 19, "timestamp": 1772348706863}, {"id": "s167", "question": "Laju reaksi dipengaruhi oleh faktor berikut, kecuali ...", "options": ["Suhu", "Konsentrasi", "Katalis", "Warna larutan"], "correct": 3, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Faktor laju reaksi: suhu, konsentrasi, katalis, luas permukaan. Warna tidak mempengaruhi laju.", "likes": 22, "timestamp": 1772345106863}, {"id": "s168", "question": "Proses pembuatan besi dari biji besi menggunakan tanur tinggi disebut proses ...", "options": ["Haber-Bosch", "Tanur sembur", "Contact", "Ostwald"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Proses tanur sembur/blast furnace digunakan untuk mereduksi biji besi (Fe₂O₃) menjadi besi murni.", "likes": 23, "timestamp": 1772341506863}, {"id": "s169", "question": "Senyawa organik yang memiliki gugus fungsi −OH adalah ...", "options": ["Aldehid", "Keton", "Alkohol", "Ester"], "correct": 2, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Alkohol memiliki gugus fungsi −OH (hidroksil). Rumus umum: R−OH.", "likes": 20, "timestamp": 1772337906863}, {"id": "s170", "question": "Jumlah mol 18 gram air (Mr H₂O = 18) adalah ...", "options": ["0,5 mol", "1 mol", "2 mol", "18 mol"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "n = massa/Mr = 18/18 = 1 mol", "likes": 9, "timestamp": 1772334306863}, {"id": "s171", "question": "Gas yang dihasilkan pada proses fotosintesis adalah ...", "options": ["CO₂", "H₂", "O₂", "N₂"], "correct": 2, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Fotosintesis menghasilkan O₂ (oksigen) dan glukosa.", "likes": 18, "timestamp": 1772330706863}, {"id": "s172", "question": "Isomer adalah senyawa yang memiliki ...", "options": ["Rumus molekul sama, sifat sama", "Rumus molekul sama, sifat berbeda", "Rumus molekul berbeda, sifat sama", "Semua sama"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Isomer: rumus molekul sama tetapi struktur/sifat berbeda.", "likes": 18, "timestamp": 1772327106863}, {"id": "s173", "question": "Proses Haber-Bosch digunakan untuk membuat ...", "options": ["Asam sulfat", "Amonia", "Besi", "Aluminium"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Proses Haber-Bosch: N₂ + 3H₂ → 2NH₃ (amonia), digunakan sebagai pupuk.", "likes": 25, "timestamp": 1772323506863}, {"id": "s174", "question": "Elektrolisis adalah proses ...", "options": ["Reaksi spontan", "Reaksi non-spontan dengan bantuan listrik", "Reaksi pembakaran", "Reaksi asam-basa"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Elektrolisis: reaksi kimia non-spontan yang dipaksa terjadi dengan menggunakan arus listrik.", "likes": 5, "timestamp": 1772319906863}, {"id": "s175", "question": "Senyawa yang bersifat asam menurut Arrhenius adalah ...", "options": ["NaOH", "HCl", "NaCl", "CH₃OH"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Arrhenius: asam = menghasilkan H⁺ dalam larutan. HCl → H⁺ + Cl⁻", "likes": 18, "timestamp": 1772316306863}, {"id": "s176", "question": "Koloid adalah campuran dengan ukuran partikel ...", "options": ["< 1 nm", "1−100 nm", "100−1000 nm", "> 1000 nm"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Ukuran partikel koloid: 1−100 nm (atau 1−1000 nm menurut beberapa referensi).", "likes": 8, "timestamp": 1772312706863}, {"id": "s177", "question": "Reaksi redoks melibatkan perpindahan ...", "options": ["Proton", "Elektron", "Neutron", "Foton"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sedang", "author": "Admin", "pembahasan": "Redoks = reduksi-oksidasi: perpindahan elektron dari zat yang dioksidasi ke zat yang direduksi.", "likes": 20, "timestamp": 1772309106863}, {"id": "s178", "question": "Entalpi pembentukan standar (ΔHf°) unsur murni dalam keadaan standar adalah ...", "options": ["Positif", "Negatif", "Nol", "Tidak tentu"], "correct": 2, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Entalpi pembentukan standar unsur murni (O₂, H₂, C, dll.) = 0 kJ/mol.", "likes": 17, "timestamp": 1772305506863}, {"id": "s179", "question": "Polimer yang terbentuk dari monomer etilena adalah ...", "options": ["PVC", "Polietilen", "Polipropilen", "Nilon"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Polietilen (PE) terbentuk dari polimerisasi monomer etilena (CH₂=CH₂).", "likes": 10, "timestamp": 1772301906863}, {"id": "s180", "question": "Pada sel volta, oksidasi terjadi di elektroda ...", "options": ["Katoda", "Anoda", "Keduanya", "Tidak ada"], "correct": 1, "jenjang": "SMA", "mapel": "Kimia", "level": "Sulit", "author": "Admin", "pembahasan": "Anoda = oksidasi (OAK). Katoda = reduksi (KAR). Ingat: OAK-KAR.", "likes": 24, "timestamp": 1772298306863}, {"id": "s181", "question": "Organel yang berfungsi sebagai 'pembangkit energi' sel adalah ...", "options": ["Ribosom", "Nukleus", "Mitokondria", "Lisosom"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Mitokondria menghasilkan ATP melalui respirasi seluler, disebut 'power house of the cell'.", "likes": 6, "timestamp": 1772294706863}, {"id": "s182", "question": "Proses pembelahan sel yang menghasilkan 4 sel anak dengan kromosom setengah dari induk disebut ...", "options": ["Mitosis", "Meiosis", "Amitosis", "Sitokinesis"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Meiosis: pembelahan sel yang menghasilkan 4 sel anak haploid (n), terjadi pada pembentukan gamet.", "likes": 18, "timestamp": 1772291106863}, {"id": "s183", "question": "Hormon yang berperan dalam pengaturan kadar gula darah adalah ...", "options": ["Adrenalin", "Tiroksin", "Insulin", "Kortisol"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Insulin (dari pankreas) menurunkan kadar gula darah. Glukagon menaikkan kadar gula darah.", "likes": 10, "timestamp": 1772287506863}, {"id": "s184", "question": "DNA tersusun dari nukleotida yang terdiri dari ...", "options": ["Gula, basa nitrogen, fosfat", "Asam amino, gula, fosfat", "Gula, lemak, protein", "Basa nitrogen saja"], "correct": 0, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Nukleotida = gula deoksiribosa + basa nitrogen (A,T,G,C) + gugus fosfat.", "likes": 6, "timestamp": 1772283906863}, {"id": "s185", "question": "Evolusi menurut Darwin didasarkan pada ...", "options": ["Penggunaan dan tidak penggunaan organ", "Seleksi alam dan variasi", "Mutasi saja", "Radiasi adaptif"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Darwin: evolusi terjadi melalui seleksi alam terhadap variasi yang ada dalam populasi.", "likes": 7, "timestamp": 1772280306863}, {"id": "s186", "question": "Jaringan yang berfungsi mengangkut air dan mineral pada tumbuhan adalah ...", "options": ["Floem", "Xilem", "Kambium", "Epidermis"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Xilem mengangkut air dan mineral dari akar ke daun. Floem mengangkut hasil fotosintesis.", "likes": 15, "timestamp": 1772276706863}, {"id": "s187", "question": "Enzim yang memecah protein menjadi asam amino adalah ...", "options": ["Amilase", "Lipase", "Protease", "Sukrase"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Protease (pepsin, tripsin, kimotripsin) memecah protein menjadi asam amino.", "likes": 8, "timestamp": 1772273106863}, {"id": "s188", "question": "Respirasi anaerob menghasilkan ...", "options": ["CO₂ dan H₂O", "Asam laktat atau etanol", "Glukosa", "O₂"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Respirasi anaerob: menghasilkan asam laktat (pada otot) atau etanol+CO₂ (pada ragi).", "likes": 20, "timestamp": 1772269506863}, {"id": "s189", "question": "Sistem saraf pusat manusia terdiri dari ...", "options": ["Otak dan sumsum tulang belakang", "Otak dan saraf perifer", "Sumsum dan ganglion", "Otak kecil dan otak besar saja"], "correct": 0, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Sistem saraf pusat = otak + sumsum tulang belakang (medula spinalis).", "likes": 9, "timestamp": 1772265906863}, {"id": "s190", "question": "Mekanisme masuknya air ke dalam sel melalui membran semipermeabel disebut ...", "options": ["Difusi", "Osmosis", "Transport aktif", "Endositosis"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Osmosis = pergerakan air dari larutan hipotonik ke hipertonik melalui membran semipermeabel.", "likes": 18, "timestamp": 1772262306863}, {"id": "s191", "question": "Tumbuhan dikotil memiliki ciri ...", "options": ["Tulang daun sejajar", "Akar serabut", "Biji berkeping dua", "Jumlah mahkota bunga 3"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Ciri dikotil: biji berkeping dua, tulang daun menjari/menyirip, akar tunggang, kelopak bunga 4/5.", "likes": 8, "timestamp": 1772258706863}, {"id": "s192", "question": "Antibodi diproduksi oleh ...", "options": ["Sel T", "Sel B", "Makrofag", "Neutrofil"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Sel B (limfosit B) setelah diaktifkan menjadi sel plasma yang memproduksi antibodi.", "likes": 25, "timestamp": 1772255106863}, {"id": "s193", "question": "Tahap pertama respirasi seluler yang terjadi di sitoplasma adalah ...", "options": ["Siklus Krebs", "Rantai transpor elektron", "Glikolisis", "Beta oksidasi"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Glikolisis terjadi di sitoplasma: glukosa (6C) → 2 piruvat (3C) + 2 ATP + 2 NADH.", "likes": 4, "timestamp": 1772251506863}, {"id": "s194", "question": "Mutasi yang terjadi pada tingkat kromosom disebut ...", "options": ["Mutasi gen", "Mutasi titik", "Mutasi kromosom", "Mutasi somatik"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Mutasi kromosom = perubahan struktur atau jumlah kromosom. Contoh: Down syndrome (trisomi 21).", "likes": 6, "timestamp": 1772247906863}, {"id": "s195", "question": "Daur biogeokimia yang melibatkan proses denitrifikasi adalah daur ...", "options": ["Karbon", "Nitrogen", "Fosfor", "Sulfur"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Daur nitrogen melibatkan: fiksasi N₂, nitrifikasi, denitrifikasi (bakteri mengubah nitrat→N₂).", "likes": 11, "timestamp": 1772244306863}, {"id": "s196", "question": "Jaringan meristem pada tumbuhan berfungsi untuk ...", "options": ["Melindungi tumbuhan", "Fotosintesis", "Pertumbuhan (pembelahan sel)", "Pengangkutan"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Meristem = jaringan yang sel-selnya aktif membelah, bertanggung jawab atas pertumbuhan tumbuhan.", "likes": 24, "timestamp": 1772240706863}, {"id": "s197", "question": "Gen yang menutupi ekspresi gen lain disebut gen ...", "options": ["Resesif", "Dominan", "Epistasis", "Hipostasis"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sedang", "author": "Admin", "pembahasan": "Gen dominan menutupi ekspresi gen resesif. Epistasis = interaksi antar gen.", "likes": 21, "timestamp": 1772237106863}, {"id": "s198", "question": "Prinsip pengklasifikasian makhluk hidup dari tingkatan tertinggi ke terendah adalah ...", "options": ["Kingdom-Filum-Kelas-Ordo-Famili-Genus-Spesies", "Spesies-Genus-Famili-Ordo-Kelas-Filum-Kingdom", "Kingdom-Kelas-Ordo-Filum-Famili-Genus-Spesies", "Filum-Kingdom-Kelas-Ordo-Famili-Genus-Spesies"], "correct": 0, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Taksonomi: Kingdom > Filum > Kelas > Ordo > Famili > Genus > Spesies. Ingat: King Philip Came Over For Good Spaghetti.", "likes": 10, "timestamp": 1772233506863}, {"id": "s199", "question": "Bagian telinga dalam yang berfungsi untuk keseimbangan adalah ...", "options": ["Koklea", "Kanalis semisirkularis", "Gendang telinga", "Tulang sanggurdi"], "correct": 1, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Kanalis semisirkularis di telinga dalam berperan dalam keseimbangan tubuh.", "likes": 13, "timestamp": 1772229906863}, {"id": "s200", "question": "Proses sintesis protein dari kode mRNA menjadi urutan asam amino disebut ...", "options": ["Transkripsi", "Replikasi", "Translasi", "Duplikasi"], "correct": 2, "jenjang": "SMA", "mapel": "Biologi", "level": "Sulit", "author": "Admin", "pembahasan": "Translasi: proses membaca kodon mRNA dan merangkai asam amino menjadi protein di ribosom.", "likes": 13, "timestamp": 1772226306863}];
+
+// ===== INIT =====
+function init() {
+  allSoal = [...DEFAULT_SOAL];
+  var saved = JSON.parse(localStorage.getItem('kamusSoal')||'[]');
+  saved.forEach(function(s){ if(!allSoal.find(x=>x.id===s.id)) allSoal.push(s); });
+  applyFilters();
+  document.getElementById('loading').classList.add('hidden');
+  updateStats();
+}
+
+function updateStats() {
+  document.getElementById('stat-total').textContent = allSoal.length;
+}
+
+// ===== FILTER & SEARCH =====
+function setFilter(type, val, el) {
+  filters[type] = val;
+  // update chip UI in same group
+  var parent = el.parentElement;
+  parent.querySelectorAll('.chip').forEach(function(c){
+    if(c.onclick && c.onclick.toString().includes("'"+type+"'")) {
+      c.classList.remove('active');
+    }
+  });
+  el.classList.add('active');
+  applyFilters();
+}
+
+function doSearch(val) {
+  searchQuery = val.toLowerCase();
+  // sync both search inputs
+  var m = document.getElementById('search-main');
+  var mb = document.getElementById('search-mobile');
+  if(document.activeElement === m && mb) mb.value = val;
+  if(document.activeElement === mb && m) m.value = val;
+  applyFilters();
+}
+
+function doSort(val) {
+  sortBy = val;
+  applyFilters();
+}
+
+function applyFilters() {
+  var result = allSoal.filter(function(s) {
+    if(filters.jenjang !== 'all' && s.jenjang !== filters.jenjang) return false;
+    if(filters.mapel !== 'all' && s.mapel !== filters.mapel) return false;
+    if(filters.level !== 'all' && s.level !== filters.level) return false;
+    if(searchQuery) {
+      var haystack = (s.question + s.mapel + s.jenjang + (s.pembahasan||'')).toLowerCase();
+      if(!haystack.includes(searchQuery)) return false;
+    }
+    return true;
+  });
+  // sort
+  result.sort(function(a,b){
+    if(sortBy==='newest') return b.timestamp - a.timestamp;
+    if(sortBy==='oldest') return a.timestamp - b.timestamp;
+    if(sortBy==='likes') return (b.likes||0) - (a.likes||0);
+    if(sortBy==='az') return a.question.localeCompare(b.question);
+    return 0;
+  });
+  filteredSoal = result;
+  renderSoal();
+}
+
+// ===== RENDER =====
+function renderSoal() {
+  var grid = document.getElementById('soal-grid');
+  var empty = document.getElementById('empty-state');
+  document.getElementById('result-count').textContent = filteredSoal.length;
+  if(filteredSoal.length === 0) {
+    grid.innerHTML = '';
+    empty.classList.remove('hidden');
+    return;
+  }
+  empty.classList.add('hidden');
+  grid.innerHTML = filteredSoal.map(function(s) {
+    var jClass = s.jenjang.toLowerCase();
+    var badgeJ = 'badge-'+jClass;
+    var levelClass = s.level==='Mudah'?'easy':s.level==='Sedang'?'medium':'hard';
+    var isLiked = likedSoals.includes(s.id);
+    var showAns = showAnswers[s.id];
+    var opts = (s.options||[]).map(function(o,i){
+      var isCorrect = i===s.correct;
+      return '<div class="card-option'+(isCorrect&&showAns?' correct':'')+'">'+
+        '<div class="option-letter" style="'+(isCorrect&&showAns?'background:var(--green);border-color:var(--green);color:white;':'')+'">'+['A','B','C','D'][i]+'</div>'+
+        '<span>'+escHtml(o)+'</span></div>';
+    }).join('');
+    return '<div class="soal-card '+jClass+'" onclick="openDetail(\''+s.id+'\')">'+
+      '<div class="card-top">'+
+        '<div class="card-badges">'+
+          '<span class="badge '+badgeJ+'">'+s.jenjang+'</span>'+
+          '<span class="badge badge-mapel">'+escHtml(s.mapel)+'</span>'+
+          '<span class="badge badge-'+levelClass+'">'+s.level+'</span>'+
+        '</div>'+
+        '<div class="card-menu" onclick="event.stopPropagation()">'+
+          '<button class="card-menu-btn" onclick="toggleMenu(\'menu-'+s.id+'\')">⋯</button>'+
+          '<div class="card-dropdown hidden" id="menu-'+s.id+'">'+
+            '<button onclick="openEditModal(\''+s.id+'\')">✏️ Edit</button>'+
+            '<button onclick="copySoal(\''+s.id+'\')" >📋 Salin</button>'+
+            '<button class="danger" onclick="deleteSoal(\''+s.id+'\')">🗑️ Hapus</button>'+
+          '</div>'+
+        '</div>'+
+      '</div>'+
+      '<div class="card-question">'+escHtml(s.question)+'</div>'+
+      '<div class="card-options">'+opts+'</div>'+
+      '<button class="card-answer-toggle" onclick="event.stopPropagation();toggleAnswer(\''+s.id+'\')" >'+
+        (showAns?'🙈 Sembunyikan Jawaban':'👁️ Lihat Jawaban')+
+      '</button>'+
+      '<div class="card-footer">'+
+        '<div class="card-meta">👤 '+escHtml(s.author||'Anonim')+'</div>'+
+        '<button class="card-likes'+(isLiked?' liked':'')+ '" onclick="event.stopPropagation();toggleLike(\''+s.id+'\')" >'+
+          (isLiked?'❤️':'🤍')+' '+(s.likes||0)+
+        '</button>'+
+      '</div>'+
+    '</div>';
+  }).join('');
+}
+
+function escHtml(s){
+  return String(s||'').replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});
+}
+
+// ===== ACTIONS =====
+function toggleAnswer(id) {
+  showAnswers[id] = !showAnswers[id];
+  renderSoal();
+}
+
+function toggleMenu(id) {
+  document.querySelectorAll('.card-dropdown').forEach(function(d){
+    if('menu-'+id !== d.id) d.classList.add('hidden');
+  });
+  document.getElementById(id).classList.toggle('hidden');
+}
+document.addEventListener('click', function(e){
+  if(!e.target.classList.contains('card-menu-btn')) {
+    document.querySelectorAll('.card-dropdown').forEach(function(d){ d.classList.add('hidden'); });
+  }
+});
+
+function toggleLike(id) {
+  var s = allSoal.find(function(x){return x.id===id;});
+  if(!s) return;
+  if(likedSoals.includes(id)) {
+    likedSoals = likedSoals.filter(function(x){return x!==id;});
+    s.likes = Math.max(0,(s.likes||0)-1);
+  } else {
+    likedSoals.push(id);
+    s.likes = (s.likes||0)+1;
+  }
+  localStorage.setItem('likedSoals', JSON.stringify(likedSoals));
+  saveUserSoal();
+  renderSoal();
+  // Also save to Firebase if available
+  if(window.fbUpdateLikes) window.fbUpdateLikes(id, s.likes);
+}
+
+function copySoal(id) {
+  var s = allSoal.find(function(x){return x.id===id;});
+  if(!s) return;
+  var text = s.question+'\n'+s.options.map(function(o,i){return ['A','B','C','D'][i]+'. '+o;}).join('\n')+'\nJawaban: '+['A','B','C','D'][s.correct];
+  navigator.clipboard.writeText(text).then(function(){ showToast('Soal disalin!','success'); }).catch(function(){ showToast('Gagal menyalin','error'); });
+}
+
+function deleteSoal(id) {
+  if(!confirm('Yakin hapus soal ini?')) return;
+  allSoal = allSoal.filter(function(x){return x.id!==id;});
+  saveUserSoal();
+  applyFilters();
+  updateStats();
+  showToast('Soal dihapus!','success');
+  if(window.fbDeleteSoal) window.fbDeleteSoal(id);
+}
+
+function saveUserSoal() {
+  var userSoal = allSoal.filter(function(s){ return !DEFAULT_SOAL.find(function(d){return d.id===s.id;}); });
+  // Also save likes for default soal
+  var allWithLikes = allSoal.map(function(s){ return {id:s.id, likes:s.likes}; });
+  localStorage.setItem('kamusSoal', JSON.stringify(userSoal));
+  localStorage.setItem('soalLikes', JSON.stringify(allWithLikes));
+}
+
+// ===== ADD / EDIT MODAL =====
+function openAddModal() {
+  editingId = null;
+  document.getElementById('modal-add-title').textContent = '✏️ Tambah Soal Baru';
+  document.getElementById('btn-submit-soal').textContent = '💾 Simpan Soal';
+  clearForm();
+  document.getElementById('modal-add').classList.remove('hidden');
+}
+
+function openEditModal(id) {
+  var s = allSoal.find(function(x){return x.id===id;});
+  if(!s) return;
+  editingId = id;
+  document.getElementById('modal-add-title').textContent = '✏️ Edit Soal';
+  document.getElementById('btn-submit-soal').textContent = '💾 Simpan Perubahan';
+  document.getElementById('f-question').value = s.question;
+  document.getElementById('f-jenjang').value = s.jenjang;
+  document.getElementById('f-mapel').value = s.mapel;
+  document.getElementById('f-level').value = s.level;
+  document.getElementById('f-author').value = s.author||'';
+  document.getElementById('f-pembahasan').value = s.pembahasan||'';
+  var opts = ['opt-a','opt-b','opt-c','opt-d'];
+  opts.forEach(function(o,i){ document.getElementById(o).value = s.options[i]||''; });
+  var radios = document.querySelectorAll('input[name="correct"]');
+  radios.forEach(function(r){ r.checked = parseInt(r.value)===s.correct; });
+  document.getElementById('modal-add').classList.remove('hidden');
+}
+
+function closeAddModal() {
+  document.getElementById('modal-add').classList.add('hidden');
+  editingId = null;
+}
+
+function clearForm() {
+  ['f-question','opt-a','opt-b','opt-c','opt-d','f-pembahasan','f-author'].forEach(function(id){ document.getElementById(id).value=''; });
+  document.getElementById('f-jenjang').value='';
+  document.getElementById('f-mapel').value='';
+  document.getElementById('f-level').value='Sedang';
+  document.querySelectorAll('input[name="correct"]').forEach(function(r){ r.checked=false; });
+}
+
+function submitSoal() {
+  var q = document.getElementById('f-question').value.trim();
+  var j = document.getElementById('f-jenjang').value;
+  var m = document.getElementById('f-mapel').value;
+  var l = document.getElementById('f-level').value;
+  var a = document.getElementById('f-author').value.trim()||'Anonim';
+  var pb = document.getElementById('f-pembahasan').value.trim();
+  var opts = [
+    document.getElementById('opt-a').value.trim(),
+    document.getElementById('opt-b').value.trim(),
+    document.getElementById('opt-c').value.trim(),
+    document.getElementById('opt-d').value.trim()
+  ];
+  var correctRadio = document.querySelector('input[name="correct"]:checked');
+  if(!q||!j||!m||opts.some(function(o){return!o;})||!correctRadio) {
+    showToast('Lengkapi semua field yang wajib!','error'); return;
+  }
+  var correct = parseInt(correctRadio.value);
+  var soal = { question:q, options:opts, correct:correct, jenjang:j, mapel:m, level:l, author:a, pembahasan:pb, likes:0, timestamp:Date.now() };
+
+  if(editingId) {
+    var idx = allSoal.findIndex(function(x){return x.id===editingId;});
+    if(idx>=0){ soal.id=editingId; soal.likes=allSoal[idx].likes||0; allSoal[idx]=soal; }
+    showToast('Soal berhasil diubah! ✅','success');
+    if(window.fbEditSoal) window.fbEditSoal(editingId, soal);
+  } else {
+    soal.id = 'u'+Date.now();
+    allSoal.unshift(soal);
+    showToast('Soal berhasil ditambahkan! 🎉','success');
+    if(window.fbAddSoal) window.fbAddSoal(soal);
+  }
+  saveUserSoal();
+  applyFilters();
+  updateStats();
+  closeAddModal();
+}
+
+// ===== DETAIL MODAL =====
+function openDetail(id) {
+  var s = allSoal.find(function(x){return x.id===id;});
+  if(!s) return;
+  var opts = (s.options||[]).map(function(o,i){
+    var isC = i===s.correct;
+    return '<div class="detail-option'+(isC?' correct':'')+'">'+
+      '<div class="opt-key">'+['A','B','C','D'][i]+'</div>'+
+      '<span>'+escHtml(o)+(isC?' ✓ <strong>(Benar)</strong>':'')+'</span>'+
+    '</div>';
+  }).join('');
+  var html = '<div class="detail-question">'+escHtml(s.question)+'</div>'+
+    '<div class="detail-options">'+opts+'</div>'+
+    (s.pembahasan?'<div style="padding:14px;background:#eff6ff;border-radius:10px;margin-bottom:16px;font-size:0.85rem;line-height:1.7;border-left:3px solid var(--primary)">'+
+    '<strong style="display:block;margin-bottom:6px;color:var(--primary)">💡 Pembahasan:</strong>'+escHtml(s.pembahasan)+'</div>':'')+
+    '<div class="detail-info">'+
+      '<div class="detail-info-item"><div class="detail-info-label">Jenjang</div><div class="detail-info-value">'+s.jenjang+'</div></div>'+
+      '<div class="detail-info-item"><div class="detail-info-label">Mata Pelajaran</div><div class="detail-info-value">'+s.mapel+'</div></div>'+
+      '<div class="detail-info-item"><div class="detail-info-label">Tingkat</div><div class="detail-info-value">'+s.level+'</div></div>'+
+      '<div class="detail-info-item"><div class="detail-info-label">Pembuat</div><div class="detail-info-value">'+escHtml(s.author||'Anonim')+'</div></div>'+
+    '</div>';
+  document.getElementById('detail-content').innerHTML = html;
+  document.getElementById('modal-detail').classList.remove('hidden');
+}
+
+function closeDetailModal() { document.getElementById('modal-detail').classList.add('hidden'); }
+
+// Close modal on overlay click
+document.getElementById('modal-add').addEventListener('click',function(e){ if(e.target===this) closeAddModal(); });
+document.getElementById('modal-detail').addEventListener('click',function(e){ if(e.target===this) closeDetailModal(); });
+
+// Mobile search toggle
+function toggleMobileSearch() {
+  document.getElementById('mobile-search-bar').classList.toggle('show');
+  document.getElementById('search-mobile').focus();
+}
+
+// Toast
+function showToast(msg,type){
+  var old=document.querySelector('.toast'); if(old) old.remove();
+  var t=document.createElement('div'); t.className='toast '+(type||''); t.textContent=msg;
+  document.body.appendChild(t); setTimeout(function(){ t.remove(); },3000);
+}
+
+// Start
+init();
+</script>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { getDatabase, ref, push, set, remove, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBqVix4S9N0bP3gFPgsBiU_6TDxFh4MluQ",
+  authDomain: "simtka-c9ccd.firebaseapp.com",
+  databaseURL: "https://simtka-c9ccd-default-rtdb.firebaseio.com",
+  projectId: "simtka-c9ccd",
+  storageBucket: "simtka-c9ccd.firebasestorage.app",
+  messagingSenderId: "965529091478",
+  appId: "1:965529091478:web:2f8d98b51020f0e5b831b7"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+// Load soal dari Firebase
+onValue(ref(db,'kamus_soal'), function(snap) {
+  var data = snap.val();
+  if(!data) return;
+  var fbSoal = Object.entries(data).map(function([k,v]){ return Object.assign({},v,{id:'fb_'+k, fbKey:k}); });
+  fbSoal.forEach(function(s) {
+    if(!window.allSoal.find(function(x){return x.id===s.id;})) {
+      window.allSoal.unshift(s);
+    }
+  });
+  window.applyFilters();
+  window.updateStats();
+});
+
+// Add soal
+window.fbAddSoal = function(soal) {
+  push(ref(db,'kamus_soal'), soal).catch(function(e){ console.log(e); });
+};
+
+// Edit soal
+window.fbEditSoal = function(id, soal) {
+  var s = window.allSoal.find(function(x){return x.id===id;});
+  if(s && s.fbKey) set(ref(db,'kamus_soal/'+s.fbKey), soal).catch(function(e){ console.log(e); });
+};
+
+// Delete soal
+window.fbDeleteSoal = function(id) {
+  var s = window.allSoal.find(function(x){return x.id===id;});
+  if(s && s.fbKey) remove(ref(db,'kamus_soal/'+s.fbKey)).catch(function(e){ console.log(e); });
+};
+
+// Update likes
+window.fbUpdateLikes = function(id, likes) {
+  var s = window.allSoal.find(function(x){return x.id===id;});
+  if(s && s.fbKey) update(ref(db,'kamus_soal/'+s.fbKey), {likes:likes}).catch(function(e){ console.log(e); });
+};
+</script>
+</body>
+</html>
